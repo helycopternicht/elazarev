@@ -1,5 +1,5 @@
 /**
-* Package for tests for calculator classes
+* Package for tests for calculator classes.
 *
 * @author Eugene Lazarev (mailto:helycopternicht@rambler.ru)
 * @version $Id$

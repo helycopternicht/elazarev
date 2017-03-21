@@ -13,7 +13,7 @@ public class Calculate {
 	* @since 21/03/2017 
 	*/
 	public static void main(String[] args) {
-		System.out.println("Hello wold");
+		System.out.println("Hello World");
 	}
 
 }

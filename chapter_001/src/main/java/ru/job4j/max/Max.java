@@ -15,4 +15,15 @@ public class Max {
 	public int max(int first, int second) {
 		return first > second ? first : second;
 	}
+
+	/**
+	* Method returns maximum from three numbers.
+	* @param first - first value
+	* @param second - second value
+	* @param third - third value
+	* @return maximum from three numbers
+	*/
+	public int max(int first, int second, int third) {
+		return this.max(first, this.max(second, third));
+	}
 }

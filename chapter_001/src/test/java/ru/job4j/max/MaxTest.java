@@ -36,4 +36,13 @@ public class MaxTest {
 		Max maximum = new Max();
 		assertThat(maximum.max(10, 10), is(10));
 	}
+
+	/**
+	* Test method for max method.
+	*/
+	@Test
+	public void whenFirstIsTenSecondIsNineThirdIsFive() {
+		Max maximum = new Max();
+		assertThat(maximum.max(10, 9, 5), is(10));
+	}
 }

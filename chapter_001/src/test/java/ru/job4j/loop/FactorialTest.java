@@ -29,4 +29,15 @@ public class FactorialTest {
 		Factorial fact = new Factorial();
 		assertThat(fact.calc(0), is(1));
 	}
+
+	/**
+	* Test for calc method.
+	*/
+	@Test
+	public void whenCalcNIsNegative() {
+		Factorial fact = new Factorial();
+		assertThat(fact.calc(-1), is(1));
+		assertThat(fact.calc(-2), is(1));
+		assertThat(fact.calc(-5), is(1));
+	}
 }

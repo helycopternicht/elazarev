@@ -1,4 +1,4 @@
-package ru.job4j.loop;
+package ru.job4j.condition;
 
 /**
 * Class present point in 2d coodrinate system.
@@ -46,5 +46,14 @@ public class Point {
   */
   public boolean is(int a, int b) {
     return this.y == a * this.x + b;
+  }
+
+  /**
+   * Method returns distance between two points.
+   * @param point is passed a point
+   * @return distans between two points
+   */
+  public double distanceTo(Point point) {
+    return Math.sqrt(Math.pow(this.x - point.x, 2) + Math.pow(this.y - point.y, 2));
   }
 }

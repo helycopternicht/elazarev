@@ -16,7 +16,7 @@ public class BubbleSort {
 		int intend = 0;
 		while (!sorted) {
 			sorted = true;
-			for (int i = 1; i < source.length; i++) {
+			for (int i = 1; i < source.length - intend; i++) {
 				if (source[i - 1] > source[i]) {
 					int temp = source[i - 1];
 					source[i - 1] = source[i];

@@ -2,7 +2,7 @@ package ru.job4j.professions;
 
 /**
  * Profession class.
- * @author Eugeme Lazarev mailto(helycopternicht@rambler.ru)
+ * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 07.04.17
  */
 public class Profession {

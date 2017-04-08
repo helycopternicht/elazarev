@@ -7,7 +7,7 @@ import static org.junit.Assert.assertThat;
 
 /**
  * Engeneer test class.
- * @author Eugeme Lazarev mailto(helycopternicht@rambler.ru)
+ * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 07.04.17
  */
 public class EngeneerTest {

@@ -30,11 +30,52 @@ public class TeacherTest {
     }
 
     /**
-     * EndLesson method test.
+     * endLesson method test.
      */
     @Test
-    public void whenEndLessonThenEnd() {
+    public void endLessonTest() {
         Teacher teacher = new Teacher();
         assertThat(teacher.endLesson(), is("Lesson is end"));
+    }
+
+    /**
+     * AddStudent and getLastAddedStudent methods test.
+     */
+    @Test
+    public void whenAddStudentThenGetStudent() {
+        Teacher teacher = new Teacher();
+        teacher.addStudent("Bob");
+        teacher.addStudent("Patrick");
+        assertThat(teacher.getLastAddedStudent(), is("Patrick"));
+    }
+
+    /**
+     * setSchcoolName and whereAreYouWork methods test.
+     */
+    @Test
+    public void whenSchoolNameThenFromIsSomeValue() {
+        Teacher teacher = new Teacher();
+        teacher.setSchoolName("Alabama school");
+        assertThat(teacher.whereAreYouWork(), is("Alabama school"));
+    }
+
+    /**
+     * When there is not students call getLastAddedStudent throws exception.
+     */
+    @Test(expected = IllegalStateException.class)
+    public void whenStudentIsEmptyThenException() {
+        Teacher teacher = new Teacher();
+        teacher.getLastAddedStudent();
+    }
+
+    /**
+     * When there more then 20 students then throws exception.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void testIndexOutOfBoundsException() {
+        Teacher teacher = new Teacher();
+        for (int i = 0; i < 21; i++) {
+            teacher.addStudent("Student#" + i);
+        }
     }
 }

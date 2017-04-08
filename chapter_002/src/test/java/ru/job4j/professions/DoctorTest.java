@@ -37,4 +37,15 @@ public class DoctorTest {
         Doctor doctor = new Doctor();
         assertThat(doctor.interviewPatient(), is("What is your name?"));
     }
+
+    /**
+     * setOwnClinic and haveUOwnClinic methods test.
+     */
+    @Test
+    public void setOwnClinicAndHaveUOwnClinicTest() {
+        Doctor doctor = new Doctor();
+        assertThat(doctor.haveUOwnClinic(), is(false));
+        doctor.setOwnClinic(true);
+        assertThat(doctor.haveUOwnClinic(), is(true));
+    }
 }

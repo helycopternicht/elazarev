@@ -35,4 +35,20 @@ public class Doctor extends Profession {
     public String interviewPatient() {
         return "What is your name?";
     }
+
+    /**
+     * Setter for ownClinic field.
+     * @param ownClinic - boolean
+     */
+    public void setOwnClinic(boolean ownClinic) {
+        this.ownClinic = ownClinic;
+    }
+
+    /**
+     * Returns true if doctor have own clinic and false else.
+     * @return - boolean
+     */
+    public boolean haveUOwnClinic() {
+        return this.ownClinic;
+    }
 }

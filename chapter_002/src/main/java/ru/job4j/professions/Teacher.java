@@ -10,7 +10,7 @@ public class Teacher extends Profession {
     /**
      * Set of students.
      */
-    private String[] students = new String[20];
+    private Student[] students = new Student[20];
 
     /**
      * Number of student in class.
@@ -54,7 +54,7 @@ public class Teacher extends Profession {
      * Method to add student in teachers class.
      * @param student - Student name
      */
-    public void addStudent(String student) {
+    public void addStudent(Student student) {
         if (this.size == 19) {
             throw new IllegalArgumentException();
         }
@@ -87,11 +87,10 @@ public class Teacher extends Profession {
      * Returns last edded student or IllegalStateException if hes not students.
      * @return String - student name
      */
-    public String getLastAddedStudent() {
+    public Student getLastAddedStudent() {
         if (this.size == 0) {
             throw new IllegalStateException("Teacher hes not students");
         }
-
         return this.students[size - 1];
     }
 }

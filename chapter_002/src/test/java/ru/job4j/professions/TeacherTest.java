@@ -44,9 +44,10 @@ public class TeacherTest {
     @Test
     public void whenAddStudentThenGetStudent() {
         Teacher teacher = new Teacher();
-        teacher.addStudent("Bob");
-        teacher.addStudent("Patrick");
-        assertThat(teacher.getLastAddedStudent(), is("Patrick"));
+        Student patrick = new Student("Patrick");
+        teacher.addStudent(new Student("Bob"));
+        teacher.addStudent(patrick);
+        assertThat(teacher.getLastAddedStudent(), is(patrick));
     }
 
     /**
@@ -75,7 +76,7 @@ public class TeacherTest {
     public void testIndexOutOfBoundsException() {
         Teacher teacher = new Teacher();
         for (int i = 0; i < 21; i++) {
-            teacher.addStudent("Student#" + i);
+            teacher.addStudent(new Student("Student#" + i));
         }
     }
 }

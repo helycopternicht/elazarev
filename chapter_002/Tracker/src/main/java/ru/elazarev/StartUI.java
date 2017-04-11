@@ -180,6 +180,10 @@ public class StartUI {
         System.out.println("------------------------------------");
     }
 
+    /**
+     * Mathod adds comment to tracker item.
+     * @param item - item to add comment
+     */
     private void addComment(TrackerItem item) {
         String msg = this.input.ask("Write comment:");
         if ("".equals(msg)) {
@@ -189,6 +193,10 @@ public class StartUI {
         System.out.println("Comment added...");
     }
 
+    /**
+     * Encapsulates edit logic.
+     * @param item - tracking item to edit
+     */
     private void editItem(TrackerItem item) {
         String newName = this.input.ask("Name is " + item.getName() +  ". Enter new name:");
         String newDesc = this.input.ask("Description is " + item.getDescription() + "Enter new description:");

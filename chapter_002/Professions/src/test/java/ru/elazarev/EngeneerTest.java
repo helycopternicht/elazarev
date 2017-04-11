@@ -2,7 +2,6 @@ package ru.elazarev;
 
 import static org.hamcrest.core.Is.is;
 import org.junit.Test;
-import ru.elazarev.Engeneer;
 
 import static org.junit.Assert.assertThat;
 

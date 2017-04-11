@@ -1,10 +1,9 @@
 package ru.elazarev;
 
 import static org.hamcrest.core.Is.is;
-import org.junit.Test;
-import ru.elazarev.Doctor;
-
 import static org.junit.Assert.assertThat;
+
+import org.junit.Test;
 
 /**
  * Test class for Doctor class.

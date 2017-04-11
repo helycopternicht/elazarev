@@ -1,8 +1,6 @@
 package ru.elazarev;
 
 import org.junit.Test;
-import ru.elazarev.Student;
-import ru.elazarev.Teacher;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;

@@ -182,7 +182,8 @@ public class StartUI {
      * Method prints greeting to user.
      */
     private void printGreeting() {
-        System.out.println("Hello user! This program is tracker for any tasks. It can add, edit, delete, comment and find tasks.");
+        System.out.println("/---------------Hello user!-------------------/");
+        System.out.println("This program is tracker for any tasks. It can add, edit, delete, comment and find tasks.");
         System.out.println("To start work, Select one of the menu items. For example '1' to see all tasks in tracker");
         System.out.println("or '6' to exit from program.");
         System.out.println("");

@@ -20,12 +20,12 @@ public class Tracker {
     /**
      * Const for default length of the items storage.
      */
-    private static int DEFAULT_SIZE = 10;
+    private static final int DEFAULT_SIZE = 10;
 
     /**
      * Const for default increase rate of internal storage.
      */
-    private static int MAGNIFICATION_FACTOR = 2;
+    private static final int MAGNIFICATION_FACTOR = 2;
 
     /**
      * Default constructor.

@@ -16,7 +16,7 @@ public class TrackerTest {
     /**
      * Array of track items for tests.
      */
-    private static TrackerItem[] SOURCE = new TrackerItem[5];
+    private static final TrackerItem[] SOURCE = new TrackerItem[5];
 
     /**
      * Init of source array.

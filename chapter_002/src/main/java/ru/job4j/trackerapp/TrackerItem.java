@@ -1,6 +1,11 @@
 package ru.job4j.trackerapp;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
 /**
+ * Tracker item - one task.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 08.04.17
  */
@@ -27,30 +32,47 @@ public class TrackerItem {
     private long createdAt;
 
     /**
-     * List of coments of tracker item.
+     * List of comments of tracker item.
      */
-    private String[] comments;
-
-    /**
-     * Default constructor.
-     */
-    public TrackerItem() {
-    }
+    private List<String> comments;
 
     /**
      * Constructor.
      * @param id - id of tracker item
      * @param name - name of tracker item
      * @param description - description of tracker item
-     * @param createdAt - created date of tracker item
-     * @param comments - list of comments of tracker item
      */
-    public TrackerItem(String id, String name, String description, long createdAt, String[] comments) {
+    public TrackerItem(String id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.createdAt = new Date().getTime();
+        this.comments = new ArrayList<>();
+    }
+
+    /**
+     * All field constructor.
+     * @param id - id of tracker item
+     * @param name - name of tracker item
+     * @param description - description of tracker item
+     * @param createdAt - create date
+     * @param comments - List of comments
+     */
+    public TrackerItem(String id, String name, String description, long createdAt, List<String> comments) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.createdAt = createdAt;
         this.comments = comments;
+    }
+
+    /**
+     * To string method.
+     * @return
+     */
+    @Override
+    public String toString() {
+        return "Item ID:" + this.getId() + " Item name: " + this.getId() + " Item description: " + this.getDescription();
     }
 
     /**
@@ -121,7 +143,7 @@ public class TrackerItem {
      * Getter for comments list.
      * @return - array of comments
      */
-    public String[] getComments() {
+    public List<String> getComments() {
         return comments;
     }
 
@@ -129,7 +151,15 @@ public class TrackerItem {
      * Setter for comments filed.
      * @param comments - new list of comments
      */
-    public void setComments(String[] comments) {
+    public void setComments(List<String> comments) {
         this.comments = comments;
+    }
+
+    /**
+     * Method adds String message as comment in item.
+     * @param msg - new comment
+     */
+    public void addComment(String msg) {
+        this.comments.add(msg);
     }
 }

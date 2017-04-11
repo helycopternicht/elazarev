@@ -72,7 +72,15 @@ public class TrackerItem {
      */
     @Override
     public String toString() {
-        return "Item ID:" + this.getId() + " Item name: " + this.getId() + " Item description: " + this.getDescription();
+        StringBuilder sb = new StringBuilder();
+        sb.append("| Item's ID:" + this.getId() + " name: " + this.getName() + " description: " + this.getDescription() + "\n");
+        if (this.comments.size() > 0) {
+            sb.append("Comments:\n");
+            for (String msg : this.comments) {
+                sb.append("    " + msg + "\n");
+            }
+        }
+        return sb.toString();
     }
 
     /**

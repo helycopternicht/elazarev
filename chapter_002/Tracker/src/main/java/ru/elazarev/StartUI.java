@@ -73,12 +73,11 @@ public class StartUI {
         System.out.println("------------------------------------");
         System.out.println("Finding item by NAME.");
 
-        String name = this.input.ask("Enter item's name:");
-        TrackerItem item = tracker.findByName(name);
+        TrackerItem item = this.findByName();
         if (item == null) {
             System.out.println("Item with same name is not found");
         } else {
-            System.out.println("Founded item :" + item);
+            processFounded(item);
         }
         System.out.println("------------------------------------");
     }
@@ -90,14 +89,62 @@ public class StartUI {
         System.out.println("------------------------------------");
         System.out.println("Finding item by ID.");
 
-        String id = this.input.ask("Enter item's id:");
-        TrackerItem item = tracker.findById(id);
+        TrackerItem item = this.findById();
         if (item == null) {
             System.out.println("Item with same id not found");
         } else {
-            System.out.println("Founded item :" + item);
+            processFounded(item);
         }
         System.out.println("------------------------------------");
+    }
+
+    /**
+     * Method encapsulates search by id.
+     * @return founded item or null
+     */
+    private TrackerItem findById() {
+        String id = this.input.ask("Enter item's id:");
+        return tracker.findById(id);
+    }
+
+    /**
+     * Method encapsulates search by name.
+     * @return - founded item or null
+     */
+    private TrackerItem findByName() {
+        String id = this.input.ask("Enter item's name:");
+        return tracker.findByName(id);
+    }
+
+    /**
+     * Render process item menu.
+     * @param item - item to process
+     */
+    private void processFounded(TrackerItem item) {
+
+        while (true) {
+            System.out.println("Founded item :" + item);
+            System.out.println("1. Edit fields");
+            System.out.println("2. Add comment");
+            System.out.println("3. Exit to main menu");
+            String answer = this.input.ask("Select:");
+
+            if (answer.equals("3")) {
+                break;
+            }
+
+            switch (answer) {
+                case "1":
+                    editItem(item);
+                    break;
+                case "2":
+                    addComment(item);
+                    break;
+                default:
+                    System.out.println("Incorrect input");
+            }
+        }
+
     }
 
     /**
@@ -107,8 +154,7 @@ public class StartUI {
         System.out.println("------------------------------------");
         System.out.println("Deleting item.");
 
-        String id = this.input.ask("Enter item's id:");
-        TrackerItem item = tracker.findById(id);
+        TrackerItem item = this.findById();
         if (item == null) {
             System.out.println("Item with same id not found");
         } else {
@@ -125,18 +171,38 @@ public class StartUI {
         System.out.println("------------------------------------");
         System.out.println("Editing item.");
 
-        String id = this.input.ask("Enter item's id:");
-        TrackerItem item = tracker.findById(id);
+        TrackerItem item = this.findById();
         if (item == null) {
             System.out.println("Item with same id not found");
         } else {
-            String newName = this.input.ask("Name is " + item.getName() +  ". Enter new name:");
-            String newDesc = this.input.ask("Description is " + item.getDescription() + "Enter new description:");
-
-            this.tracker.update(new TrackerItem(id, newName, newDesc, item.getCreatedAt(), item.getComments()));
-            System.out.println("Edited");
+            editItem(item);
         }
         System.out.println("------------------------------------");
+    }
+
+    private void addComment(TrackerItem item) {
+        String msg = this.input.ask("Write comment:");
+        if ("".equals(msg)) {
+            return;
+        }
+        item.addComment(msg);
+        System.out.println("Comment added...");
+    }
+
+    private void editItem(TrackerItem item) {
+        String newName = this.input.ask("Name is " + item.getName() +  ". Enter new name:");
+        String newDesc = this.input.ask("Description is " + item.getDescription() + "Enter new description:");
+
+        if ("".equals(newName)) {
+            newName = item.getName();
+        }
+
+        if ("".equals(newDesc)) {
+            newDesc = item.getDescription();
+        }
+
+        this.tracker.update(new TrackerItem(item.getId(), newName, newDesc, item.getCreatedAt(), item.getComments()));
+        System.out.println("Edited");
     }
 
     /**
@@ -187,6 +253,14 @@ public class StartUI {
         System.out.println("To start work, Select one of the menu items. For example '1' to see all tasks in tracker");
         System.out.println("or '6' to exit from program.");
         System.out.println("");
+    }
+
+    /**
+     * Getter for tracker field. Used in testing classes.
+     * @return tracker storage.
+     */
+    public Tracker getTracker() {
+        return tracker;
     }
 
     /**

@@ -1,5 +1,7 @@
 package ru.job4j.trackerapp;
 
+import com.sun.tools.doclets.formats.html.SourceToHTMLConverter;
+
 /**
  * Class for create user interface.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
@@ -31,6 +33,7 @@ public class StartUI {
      */
     public void init() {
 
+        printHello();
         while (true) {
             printMenu();
             String answer = input.ask("Select:");
@@ -175,6 +178,13 @@ public class StartUI {
         System.out.println("4. Find item by Id");
         System.out.println("5. Find items by name");
         System.out.println("6. Exit Program");
+    }
+
+    private void printHello() {
+        System.out.println("Hello user! This program is tracker for any tasks. It can add, edit, delete, comment and find tasks.");
+        System.out.println("To start work, Select one of the menu items. For example '1' to see all tasks in tracker");
+        System.out.println("or '6' to exit from program.");
+        System.out.println("");
     }
 
     /**

@@ -1,3 +1,5 @@
+package ru.elazarev;
+
 import static org.hamcrest.core.Is.is;
 import org.junit.Test;
 import ru.elazarev.Doctor;

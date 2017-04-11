@@ -1,3 +1,5 @@
+package ru.elazarev;
+
 /**
  * Class for create user interface.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)

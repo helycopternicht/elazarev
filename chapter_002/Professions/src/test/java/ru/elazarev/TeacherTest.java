@@ -1,3 +1,5 @@
+package ru.elazarev;
+
 import org.junit.Test;
 import ru.elazarev.Student;
 import ru.elazarev.Teacher;

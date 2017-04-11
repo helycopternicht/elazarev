@@ -1,3 +1,5 @@
+package ru.elazarev;
+
 import java.util.Scanner;
 
 /**

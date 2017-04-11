@@ -1,3 +1,5 @@
+package ru.elazarev;
+
 /**
  * Tracker class for store tracker items.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)

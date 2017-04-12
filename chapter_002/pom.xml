@@ -12,5 +12,6 @@
 	<modules>
 		<module>professions</module>
 		<module>tracker</module>
+		<module>strategy</module>
 	</modules>
 </project>

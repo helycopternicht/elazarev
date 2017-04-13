@@ -1,4 +1,7 @@
-package ru.elazarev;
+package ru.elazarev.model;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Tracker class for store tracker items.
@@ -18,6 +21,11 @@ public class Tracker {
     private int size;
 
     /**
+     * Object to generate unique id.
+     */
+    private IdGenerator generator;
+
+    /**
      * Const for default length of the items storage.
      */
     private static final int DEFAULT_SIZE = 10;
@@ -33,6 +41,7 @@ public class Tracker {
     public Tracker() {
         this.items = new TrackerItem[DEFAULT_SIZE];
         this.size = 0;
+        this.generator = new IdGenerator();
     }
 
     /**
@@ -42,6 +51,11 @@ public class Tracker {
      */
     public TrackerItem add(TrackerItem item) {
         checkCapacity();
+
+        if (item.getId() == null) {
+            item.setId(String.valueOf(this.generator.generate()));
+        }
+
         this.items[size++] = item;
         return item;
     }
@@ -108,6 +122,21 @@ public class Tracker {
             }
         }
         return result;
+    }
+
+    /**
+     * Returns a new list containing the filtered elements by substring.
+     * @param substr - substring to filter tracker items
+     * @return - new filtered list of items
+     */
+    public List<TrackerItem> filterByName(String substr) {
+        List<TrackerItem> list = new ArrayList<>();
+        for (int i = 0; i < this.size; i++) {
+            if (items[i].getName().startsWith(substr)) {
+                list.add(items[i]);
+            }
+        }
+        return list;
     }
 
     /**

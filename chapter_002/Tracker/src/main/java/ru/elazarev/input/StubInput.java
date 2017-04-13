@@ -1,4 +1,4 @@
-package ru.elazarev;
+package ru.elazarev.input;
 
 /**
  * Class for emulation user input.

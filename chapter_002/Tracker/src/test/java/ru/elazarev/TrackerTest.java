@@ -5,6 +5,10 @@ import static org.junit.Assert.assertNull;
 import static org.hamcrest.core.Is.is;
 
 import org.junit.Test;
+import ru.elazarev.model.Tracker;
+import ru.elazarev.model.TrackerItem;
+
+import java.util.List;
 
 /**
  * Test class for Tracker class.
@@ -16,7 +20,7 @@ public class TrackerTest {
     /**
      * Array of track items for tests.
      */
-    private static final TrackerItem[] SOURCE = new TrackerItem[5];
+    private static final TrackerItem[] SOURCE = new TrackerItem[6];
 
     /**
      * Init of source array.
@@ -27,6 +31,7 @@ public class TrackerTest {
         SOURCE[2] = new TrackerItem("id#3", "Test task 3", "Created for testing", 123L, null);
         SOURCE[3] = new TrackerItem("id#4", "Test task 4", "Created for testing", 143L, null);
         SOURCE[4] = new TrackerItem("id#5", "Test task 5", "Created for testing", 123L, null);
+        SOURCE[5] = new TrackerItem("id#5", "Do filter tracker", "Create function", 123L, null);
     }
 
     /**
@@ -63,6 +68,19 @@ public class TrackerTest {
 
         tracker.delete(firstItem);
         assertNull(tracker.findByName("Test task 1"));
+    }
+
+    /**
+     * filterByName method test.
+     */
+    @Test
+    public void filterByNameTest() {
+        Tracker tracker = getTestTracker();
+
+        List<TrackerItem> list = tracker.filterByName("Do");
+
+        assertThat(list.size(), is(1));
+        assertThat(list.get(0).getName(), is("Do filter tracker"));
     }
 
     /**

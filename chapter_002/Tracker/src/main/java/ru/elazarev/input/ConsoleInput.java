@@ -1,4 +1,4 @@
-package ru.elazarev;
+package ru.elazarev.input;
 
 import java.util.Scanner;
 
@@ -9,6 +9,11 @@ import java.util.Scanner;
  */
 public class ConsoleInput implements Input {
 
+    /**
+     * Method to get answer from user.
+     * @param question - text of question
+     * @return
+     */
     @Override
     public String ask(String question) {
         System.out.println(question);

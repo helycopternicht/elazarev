@@ -1,4 +1,4 @@
-package ru.elazarev;
+package ru.elazarev.model;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,31 +38,37 @@ public class TrackerItem {
 
     /**
      * Constructor.
-     * @param id - id of tracker item
-     * @param name - name of tracker item
-     * @param description - description of tracker item
      */
-    public TrackerItem(String id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
+    public TrackerItem() {
         this.createdAt = new Date().getTime();
         this.comments = new ArrayList<>();
     }
 
     /**
-     * All field constructor.
-     * @param id - id of tracker item
-     * @param name - name of tracker item
-     * @param description - description of tracker item
-     * @param createdAt - create date
-     * @param comments - List of comments
+     * Constructor by another TrackerItem.
+     * @param item - item to construct new item
      */
-    public TrackerItem(String id, String name, String description, long createdAt, List<String> comments) {
+    public TrackerItem(TrackerItem item) {
+        this.id = item.getId();
+        this.name = item.getName();
+        this.description = item.getDescription();
+        this.createdAt = item.getCreatedAt();
+        this.comments = item.getComments();
+    }
+
+    /**
+     * All fields constructor.
+     * @param id - id of item
+     * @param name - name of item
+     * @param description - description of item
+     * @param crAt - createdAt of item
+     * @param comments - comments of item
+     */
+    public TrackerItem(String id, String name, String description, long crAt, List<String> comments) {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.createdAt = createdAt;
+        this.createdAt = crAt;
         this.comments = comments;
     }
 
@@ -73,11 +79,13 @@ public class TrackerItem {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("| Item's ID:" + this.getId() + " name: " + this.getName() + " description: " + this.getDescription() + "\n");
+        sb.append(String.format("TrackerItem[id=%s, name=%s, description=%s, createdAt=%s]%s",
+                getId(), getName(), getDescription(), getCreatedAt(), System.getProperty("line.separator")));
+
         if (this.comments.size() > 0) {
-            sb.append("Comments:\n");
+            sb.append(String.format("Comments:%s", System.getProperty("line.separator")));
             for (String msg : this.comments) {
-                sb.append("    " + msg + "\n");
+                sb.append(String.format("    %s%s", msg,  System.getProperty("line.separator")));
             }
         }
         return sb.toString();

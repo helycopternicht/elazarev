@@ -1,6 +1,9 @@
 package ru.elazarev;
 
 import org.junit.Test;
+import ru.elazarev.input.StubInput;
+import ru.elazarev.model.Tracker;
+import ru.elazarev.model.TrackerItem;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNotNull;
@@ -19,11 +22,11 @@ public class StubInputTest {
      */
     @Test
     public void testAddMethod() {
-        String[] answers = {"0", "new name", "newID", "newDescriptions", "6"};
+        String[] answers = {"1", "new name", "new description", "y"};
         StartUI app = new StartUI(new StubInput(answers));
         Tracker tracker = app.getTracker();
         app.init();
-        TrackerItem item = tracker.findById("newID");
+        TrackerItem item = tracker.findById("1");
         assertNotNull(item);
     }
 
@@ -32,8 +35,8 @@ public class StubInputTest {
      */
     @Test
     public void testFindAllMethod() {
-        String[] answers = {"0", "new name", "newID", "newDescriptions",
-                "0", "another name", "someID", "desc", "6"};
+        String[] answers = {"1", "New name", "New descriptions", "n",
+                "1", "Another name", "Big description", "y"};
         StartUI app = new StartUI(new StubInput(answers));
         Tracker tracker = app.getTracker();
         app.init();
@@ -46,16 +49,16 @@ public class StubInputTest {
     @Test
     public void testEditItemMethod() {
 
-        String[] answers = {"0", "new name", "newID", "newDescriptions",
-                "0", "another name", "someID", "desc",
-                "2", "newID", "test task", "test description", "6"};
+        String[] answers = {"1", "New name", "New description", "n",
+                "1", "Another name", "Description of task", "n",
+                "2", "1", "Test task", "Test description", "y"};
 
         StartUI app = new StartUI(new StubInput(answers));
         Tracker tracker = app.getTracker();
         app.init();
-        TrackerItem item = tracker.findById("newID");
-        assertThat(item.getName(), is("test task"));
-        assertThat(item.getDescription(), is("test description"));
+        TrackerItem item = tracker.findById("1");
+        assertThat(item.getName(), is("Test task"));
+        assertThat(item.getDescription(), is("Test description"));
     }
 
     /**
@@ -64,69 +67,35 @@ public class StubInputTest {
     @Test
     public void testDeleteItemMethod() {
 
-        String[] answers = {"0", "new name", "newID", "newDescriptions",
-                "0", "another name", "someID", "desc",
-                "3", "newID", "6"};
+        String[] answers = {"1", "New name", "New description", "n",
+                "1", "Another name", "Description of task", "n",
+                "3", "1", "y"};
 
         StartUI app = new StartUI(new StubInput(answers));
         Tracker tracker = app.getTracker();
         app.init();
 
         assertThat(tracker.findAll().length, is(1));
-        assertNull(tracker.findById("newID"));
+        assertNull(tracker.findById("1"));
     }
 
     /**
-     * Test to findByIdMethod.
+     * Test to comment item method.
      */
     @Test
-    public void testFindItemByIdAndEdit() {
-        String[] answers = {"0", "new name", "newID", "newDescriptions",
-                "0", "another name", "someID", "desc",
-                "4", "newID", "1", "TEST_NAME", "TEST_DESCRIPTION", "3", "6"};
+    public void commentItemTest() {
+        String[] answers = {"1", "New name", "New description", "n",
+                "1", "Another name", "desc", "n",
+                "5", "1", "TEST_COMMENT", "n", "5", "1", "TEST_COMMENT2", "y"};
 
         StartUI app = new StartUI(new StubInput(answers));
         Tracker tracker = app.getTracker();
         app.init();
-        TrackerItem item = tracker.findById("newID");
-        assertNotNull(item);
-        assertThat(item.getName(), is("TEST_NAME"));
-        assertThat(item.getDescription(), is("TEST_DESCRIPTION"));
-    }
-
-    /**
-     * Test to findByName and comment method.
-     */
-    @Test
-    public void testFindItemByIdAndComment() {
-        String[] answers = {"0", "new name", "newID", "newDescriptions",
-                "0", "another name", "someID", "desc",
-                "4", "newID", "2", "TEST_COMMENT", "2", "TEST_COMMENT2", "3", "6"};
-
-        StartUI app = new StartUI(new StubInput(answers));
-        Tracker tracker = app.getTracker();
-        app.init();
-        TrackerItem item = tracker.findById("newID");
+        TrackerItem item = tracker.findById("1");
         assertNotNull(item);
         assertThat(item.getComments().size(), is(2));
         assertThat(item.getComments().get(0), is("TEST_COMMENT"));
         assertThat(item.getComments().get(1), is("TEST_COMMENT2"));
-    }
-
-    /**
-     * Test to find item and edit method.
-     */
-    @Test
-    public void testFindItemByNameAndEdit() {
-        String[] answers = {"0", "new name", "newID", "newDescriptions",
-                "0", "another name", "someID", "desc",
-                "5", "new name", "1", "TEST_NAME", "TEST_DESCRIPTION", "3", "6"};
-
-        StartUI app = new StartUI(new StubInput(answers));
-        Tracker tracker = app.getTracker();
-        app.init();
-        TrackerItem item = tracker.findByName("TEST_NAME");
-        assertNotNull(item);
     }
 
 }

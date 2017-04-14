@@ -90,21 +90,6 @@ public class TrackerMenu {
     }
 
     /**
-     * Class to implement method info for other classes.
-     */
-    abstract class AbstractMenuAction implements MenuAction {
-
-        /**
-         * Returns info obout action.
-         * @return
-         */
-        @Override
-        public String info() {
-            return String.format("%s. %s", this.key(), this.name());
-        }
-    }
-
-    /**
      * Add action class. Performs add new item to tracker.
      */
     class AddAction extends AbstractMenuAction {

@@ -68,13 +68,25 @@ public class TrackerMenu {
      * Method ask user about action and perform it.
      */
     public void selectAction() {
-        int key = Integer.valueOf(this.input.ask("Select action:"));
+        int key = this.input.ask("Select action:", this.getRangeOfKeys());
         for (MenuAction action : this.actions) {
             if (action.key() == key) {
                 action.performAction();
                 break;
             }
         }
+    }
+
+    /**
+     * Returns range of menu keys.
+     * @return - int[]
+     */
+    private int[] getRangeOfKeys() {
+        int[] range = new int[actions.size()];
+        for (int i = 0; i < actions.size(); i++) {
+            range[i] = this.actions.get(i).key();
+        }
+        return range;
     }
 
     /**

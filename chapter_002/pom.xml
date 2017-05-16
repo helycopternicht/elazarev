@@ -13,5 +13,6 @@
 		<module>professions</module>
 		<module>tracker</module>
 		<module>strategy</module>
-	</modules>
+		<module>chessmate</module>
+    </modules>
 </project>

@@ -41,9 +41,29 @@ public class Board {
      * @throws FigureNotFoundException - when not found figure on the source Cell
      */
     public boolean move(Cell source, Cell dest) throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException {
+        Index key = findByCell(source);
+        if (key == null) {
+            throw new FigureNotFoundException("Figure not found");
+        }
 
-        boolean found = false;
-        int index = 0;
+        Cell[] wayToDest = key.getFigure().way(dest);
+
+        for (Cell cell : wayToDest) {
+            if (findByCell(cell) != null) {
+                throw new OccupiedWayException("Way is not empty");
+            }
+        }
+
+        figures[key.getIndex()] = figures[key.getIndex()].getInstance(dest);
+        return true;
+    }
+
+    /**
+     * Method returns Index instance with Figure and figure index.
+     * @param cell - cell where figure searching.
+     * @return - null if figure not found and Index instance if found.
+     */
+    private Index findByCell(Cell cell) {
         for (int i = 0; i < this.figures.length; i++) {
             if (figures[i] == null) {
                 continue;
@@ -51,28 +71,52 @@ public class Board {
 
             Cell pos = figures[i].getPosition();
 
-            if (pos.equals(source)) {
-                found = true;
-                index = i;
-                break;
+            if (pos.equals(cell)) {
+                return new Index(figures[i], i);
             }
         }
+        return null;
+    }
 
-        if (!found) {
-            throw new FigureNotFoundException("Figure not found");
+    /**
+     * Inner class to contain data about figure and its position on board.
+     */
+    static class Index {
+
+        /**
+         * Figure.
+         */
+        private Figure figure;
+
+        /**
+         * Figures index.
+         */
+        private int index;
+
+        /**
+         * Default constructor.
+         * @param figure - figure field.
+         * @param index - index field.
+         */
+        Index(Figure figure, int index) {
+            this.figure = figure;
+            this.index = index;
         }
 
-        Cell[] wayToDest = figures[index].way(dest);
-
-        for (int i = 0; i < wayToDest.length; i++) {
-            for (int j = 0; j < figures.length; j++) {
-                if (wayToDest[i].equals(figures[j].getPosition())) {
-                    throw new OccupiedWayException("Way is not empty");
-                }
-            }
+        /**
+         * Getter for figure field.
+         * @return figure field
+         */
+        public Figure getFigure() {
+            return figure;
         }
 
-        figures[index] = figures[index].getInstance(dest);
-        return true;
+        /**
+         * Getter for index field.
+         * @return - index
+         */
+        public int getIndex() {
+            return index;
+        }
     }
 }

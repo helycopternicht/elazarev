@@ -1,4 +1,4 @@
-package ru.elazarev;
+package ru.elazarev.performance;
 
 import java.util.Collection;
 import java.util.Iterator;

@@ -48,4 +48,23 @@ public class ConvertList {
         }
         return array;
     }
+
+    /**
+     * Method convert List of int arrays to one-dimension list.
+     * @param list - list to convert.
+     * @return - one-dimension list.
+     */
+    public List<Integer> convert(List<int[]> list) {
+        if (list == null) {
+            throw new IllegalArgumentException("List is null!");
+        }
+
+        List<Integer> result = new ArrayList<>();
+        for (int[] ints : list) {
+            for (int i = 0; i < ints.length; i++) {
+                result.add(ints[i]);
+            }
+        }
+        return result;
+    }
 }

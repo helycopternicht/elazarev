@@ -41,4 +41,29 @@ public class ConvertListTest {
 
         assertArrayEquals(expect, actual);
     }
+
+    /**
+     * If try to convert null then throws IllegalArgumentException.
+     */
+    @Test(expected = IllegalArgumentException.class)
+    public void whenNullToConvertThenIllegalArgumentException() {
+        ConvertList convert = new ConvertList();
+        convert.convert(null);
+    }
+
+    /**
+     * Convert method test.
+     */
+    @Test
+    public void whenConvertCorrectDataThenOneDimensionList() {
+
+        List<int[]> list = Arrays.asList(new int[] {1, 2, 3, 4}, new int[] {5, 6}, new int[] {7, 8, 9, 10, 11});
+
+        List<Integer> expected = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11);
+
+        ConvertList convert = new ConvertList();
+        List<Integer> actual = convert.convert(list);
+
+        assertArrayEquals(expected.toArray(), actual.toArray());
+    }
 }

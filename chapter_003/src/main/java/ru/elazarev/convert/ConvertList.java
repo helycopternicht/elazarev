@@ -71,17 +71,4 @@ public class ConvertList {
         }
         return result;
     }
-
-    /**
-     * Method converts list of Users to Map, where key is User id and value is User.
-     * @param list - to convert
-     * @return - Map
-     */
-    public Map<Integer, User> listToMap(List<User> list) {
-        Map<Integer, User> map = new HashMap<>(list.size());
-        for (User user : list) {
-            map.put(user.getId(), user);
-        }
-        return map;
-    }
 }

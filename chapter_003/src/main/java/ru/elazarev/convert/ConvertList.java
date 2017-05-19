@@ -1,6 +1,7 @@
 package ru.elazarev.convert;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -37,12 +38,13 @@ public class ConvertList {
         int columns = (int) (Math.ceil((double) list.size() / count));
         int[][] array = new int[count][];
 
-        int index = 0;
+        Iterator<Integer> iter = list.iterator();
+
         int[] innerArray;
         for (int i = 0; i < array.length; i++) {
             innerArray = new int[columns];
-            for (int j = 0; j < innerArray.length && index < list.size(); j++) {
-                innerArray[j] = list.get(index++);
+            for (int j = 0; j < innerArray.length && iter.hasNext(); j++) {
+                innerArray[j] = iter.next();
             }
             array[i] = innerArray;
         }

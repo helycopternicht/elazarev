@@ -1,11 +1,16 @@
 package ru.elazarev.convert;
 
-import static org.junit.Assert.assertArrayEquals;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
+
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+
 
 /**
  * Test class for ConvertList class.
@@ -65,5 +70,21 @@ public class ConvertListTest {
         List<Integer> actual = convert.convert(list);
 
         assertArrayEquals(expected.toArray(), actual.toArray());
+    }
+
+    /**
+     * listToMap method test.
+     */
+    @Test
+    public void convertToMapTest() {
+
+        List<User> users = new ArrayList<>(Arrays.asList(
+                new User(1, "Vasja"), new User(2, "Petja"), new User(3, "Masha")));
+
+        Map<Integer, User> expected = new HashMap<>();
+        expected.put(1, new User(1, "Vasja"));
+        expected.put(2, new User(2, "Petja"));
+        expected.put(3, new User(3, "Masha"));
+        assertEquals(expected, new ConvertList().listToMap(users));
     }
 }

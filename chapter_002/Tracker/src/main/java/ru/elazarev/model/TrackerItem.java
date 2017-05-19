@@ -82,7 +82,7 @@ public class TrackerItem {
         sb.append(String.format("TrackerItem[id=%s, name=%s, description=%s, createdAt=%s]%s",
                 getId(), getName(), getDescription(), getCreatedAt(), System.getProperty("line.separator")));
 
-        if (this.comments.size() > 0) {
+        if (this.comments != null && this.comments.size() > 0) {
             sb.append(String.format("Comments:%s", System.getProperty("line.separator")));
             for (String msg : this.comments) {
                 sb.append(String.format("    %s%s", msg,  System.getProperty("line.separator")));
@@ -177,5 +177,34 @@ public class TrackerItem {
      */
     public void addComment(String msg) {
         this.comments.add(msg);
+    }
+
+    /**
+     * If id is same that same objects.
+     * @param o - object to test
+     * @return - true or false
+     */
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        TrackerItem that = (TrackerItem) o;
+
+        return getId().equals(that.getId());
+    }
+
+    /**
+     * Hash code on id field.
+     * @return - integer.
+     */
+    @Override
+    public int hashCode() {
+        int result = getId().hashCode();
+        return result;
     }
 }

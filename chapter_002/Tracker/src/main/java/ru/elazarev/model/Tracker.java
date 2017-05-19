@@ -13,12 +13,7 @@ public class Tracker {
     /**
      * Internal storage for tracker items.
      */
-    private TrackerItem[] items;
-
-    /**
-     * Count of elements in storage.
-     */
-    private int size;
+    private List<TrackerItem> items;
 
     /**
      * Object to generate unique id.
@@ -26,21 +21,10 @@ public class Tracker {
     private IdGenerator generator;
 
     /**
-     * Const for default length of the items storage.
-     */
-    private static final int DEFAULT_SIZE = 10;
-
-    /**
-     * Const for default increase rate of internal storage.
-     */
-    private static final int MAGNIFICATION_FACTOR = 2;
-
-    /**
      * Default constructor.
      */
     public Tracker() {
-        this.items = new TrackerItem[DEFAULT_SIZE];
-        this.size = 0;
+        this.items = new ArrayList<>();
         this.generator = new IdGenerator();
     }
 
@@ -50,13 +34,11 @@ public class Tracker {
      * @return - added Tracker item
      */
     public TrackerItem add(TrackerItem item) {
-        checkCapacity();
-
         if (item.getId() == null) {
             item.setId(String.valueOf(this.generator.generate()));
         }
 
-        this.items[size++] = item;
+        this.items.add(item);
         return item;
     }
 
@@ -68,7 +50,7 @@ public class Tracker {
     public void update(TrackerItem item) {
         int index = indexOf(item);
         if (index > -1) {
-            this.items[index] = item;
+            this.items.set(index, item);
         }
     }
 
@@ -77,9 +59,7 @@ public class Tracker {
      * @return TrackerItem[] - list of all items.
      */
     public TrackerItem[] findAll() {
-        TrackerItem[] result = new TrackerItem[this.size];
-        System.arraycopy(this.items, 0, result, 0, this.size);
-        return result;
+        return items.toArray(new TrackerItem[this.items.size()]);
     }
 
     /**
@@ -87,11 +67,7 @@ public class Tracker {
      * @param item - item to remove
      */
     public void delete(TrackerItem item) {
-        int index = indexOf(item);
-        if (index > -1) {
-            System.arraycopy(this.items, index + 1, this.items, index, this.size - index);
-            this.size--;
-        }
+        this.items.remove(item);
     }
 
     /**
@@ -101,9 +77,9 @@ public class Tracker {
      */
     public TrackerItem findByName(String name) {
         TrackerItem result = null;
-        for (int i = 0; i < this.size; i++) {
-            if (name.equals(this.items[i].getName())) {
-                result = this.items[i];
+        for (TrackerItem item : this.items) {
+            if (name.equals(item.getName())) {
+                result = item;
             }
         }
         return result;
@@ -116,9 +92,9 @@ public class Tracker {
      */
     public TrackerItem findById(String id) {
         TrackerItem result = null;
-        for (int i = 0; i < this.size; i++) {
-            if (id.equals(this.items[i].getId())) {
-                result = this.items[i];
+        for (TrackerItem item : this.items) {
+            if (id.equals(item.getId())) {
+                result = item;
             }
         }
         return result;
@@ -131,9 +107,9 @@ public class Tracker {
      */
     public List<TrackerItem> filterByName(String substr) {
         List<TrackerItem> list = new ArrayList<>();
-        for (int i = 0; i < this.size; i++) {
-            if (items[i].getName().startsWith(substr)) {
-                list.add(items[i]);
+        for (TrackerItem item : this.items) {
+            if (item.getName().startsWith(substr)) {
+                list.add(item);
             }
         }
         return list;
@@ -145,31 +121,6 @@ public class Tracker {
      * @return int index of item or -1 of not exists
      */
     private int indexOf(TrackerItem item) {
-        int index = -1;
-        for (int i = 0; i < this.size; i++) {
-            if (this.items[i].getId().equals(item.getId())) {
-                index = i;
-            }
-        }
-        return index;
-    }
-
-    /**
-     * Checks tracker needs to increase the storage and
-     * increase if it needed.
-     */
-    private void checkCapacity() {
-        if (items.length < this.size + 1) {
-            increaseStorage();
-        }
-    }
-
-    /**
-     * Method to increase internal storage use MAGNIFICATION_FACTOR const.
-     */
-    private void increaseStorage() {
-        TrackerItem[] newStorage = new TrackerItem[this.items.length * MAGNIFICATION_FACTOR];
-        System.arraycopy(this.items, 0, newStorage, 0, this.items.length);
-        this.items = newStorage;
+        return this.items.indexOf(item);
     }
 }

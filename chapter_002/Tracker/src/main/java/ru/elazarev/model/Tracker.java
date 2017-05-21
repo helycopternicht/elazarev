@@ -80,6 +80,7 @@ public class Tracker {
         for (TrackerItem item : this.items) {
             if (name.equals(item.getName())) {
                 result = item;
+                break;
             }
         }
         return result;
@@ -95,6 +96,7 @@ public class Tracker {
         for (TrackerItem item : this.items) {
             if (id.equals(item.getId())) {
                 result = item;
+                break;
             }
         }
         return result;

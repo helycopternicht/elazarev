@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Class to convert user lists
+ * Class to convert user lists.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 19.05.17
  */

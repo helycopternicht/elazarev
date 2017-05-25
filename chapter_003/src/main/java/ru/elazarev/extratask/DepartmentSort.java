@@ -17,15 +17,7 @@ public class DepartmentSort {
      * @return - sorted array
      */
     public String[] sortAsc(String[] departments) {
-
-        Set<String> set = new TreeSet<>(new ASCComparator());
-        for (String name : departments) {
-
-            do {
-                set.add(name);
-                name = getParentUnit(name);
-            } while (name != null);
-        }
+        Set<String> set = separateUnits(new TreeSet<>(new ASCComparator()), departments);
         return set.toArray(new String[set.size()]);
     }
 
@@ -35,16 +27,24 @@ public class DepartmentSort {
      * @return - sorted array
      */
     public String[] sortDesc(String[] departments) {
+        Set<String> set = separateUnits(new TreeSet<>(new DESCComparator()), departments);
+        return set.toArray(new String[set.size()]);
+    }
 
-        Set<String> set = new TreeSet<>(new DESCComparator());
+    /**
+     * Separate and add to set all units from departments names.
+     * @param set - set to add unit name
+     * @param departments - array of departments names
+     * @return - Set with all departments names
+     */
+    private Set<String> separateUnits(Set<String> set, String[] departments) {
         for (String name : departments) {
-
             do {
                 set.add(name);
                 name = getParentUnit(name);
             } while (name != null);
         }
-        return set.toArray(new String[set.size()]);
+        return set;
     }
 
     /**
@@ -69,7 +69,7 @@ public class DepartmentSort {
          * Compare departments name with its unit hierarchy.
          * @param first - first name
          * @param second - second name
-         * @return
+         * @return - int
          */
         @Override
         public int compare(String first, String second) {
@@ -96,7 +96,7 @@ public class DepartmentSort {
          * Compare departments name with its unit hierarchy.
          * @param first - first name
          * @param second - second name
-         * @return
+         * @return - int
          */
         @Override
         public int compare(String first, String second) {

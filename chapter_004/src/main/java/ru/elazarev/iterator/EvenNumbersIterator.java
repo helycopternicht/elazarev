@@ -1,8 +1,6 @@
 package ru.elazarev.iterator;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -12,9 +10,9 @@ import java.util.NoSuchElementException;
  */
 public class EvenNumbersIterator implements Iterator<Integer> {
     /**
-     * Storage for even numbers.
+     * ref to array that we should iterate.
      */
-    private List<Integer> storage;
+    private int[] storage;
     /**
      * Current index of storage.
      */
@@ -25,12 +23,7 @@ public class EvenNumbersIterator implements Iterator<Integer> {
      * @param sourceArr - for iterate even numbers
      */
     public EvenNumbersIterator(int[] sourceArr) {
-        this.storage = new ArrayList<>();
-        for (int i = 0; i < sourceArr.length; i++) {
-            if (sourceArr[i] % 2 == 0) {
-                this.storage.add(sourceArr[i]);
-            }
-        }
+        this.storage = sourceArr;
     }
 
     /**
@@ -39,7 +32,30 @@ public class EvenNumbersIterator implements Iterator<Integer> {
      */
     @Override
     public boolean hasNext() {
-        return index < this.storage.size();
+        return index < this.storage.length && arrayHasEvenNumbersBeginFromIndex();
+    }
+
+    /**
+     * Returns true if in source array in range from cur index to end of array have
+     * at least one eben element.
+     * @return - true or false
+     */
+    private boolean arrayHasEvenNumbersBeginFromIndex() {
+        for (int i = this.index; i < this.storage.length; i++) {
+            if (isEven(this.storage[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if num is even or false if it is not.
+     * @param num - number to check
+     * @return true or false
+     */
+    private boolean isEven(int num) {
+        return num % 2 == 0;
     }
 
     /**
@@ -49,9 +65,12 @@ public class EvenNumbersIterator implements Iterator<Integer> {
      */
     @Override
     public Integer next() {
-        if (index >= this.storage.size()) {
-            throw new NoSuchElementException("No such element");
+        for (; this.index < this.storage.length; this.index++) {
+            if (isEven(this.storage[this.index])) {
+                return this.storage[this.index++];
+            }
         }
-        return this.storage.get(index++);
+
+        throw new NoSuchElementException("Has no more even number");
     }
 }

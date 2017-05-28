@@ -1,9 +1,7 @@
 package ru.elazarev.iterator;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 /**
@@ -12,9 +10,9 @@ import java.util.NoSuchElementException;
  */
 public class PrimeNumbersIterator implements Iterator<Integer> {
     /**
-     * Storage for prime numbers.
+     * Ref on source array.
      */
-    private List<Integer> storage;
+    private int[] storage;
     /**
      * Current index of storage.
      */
@@ -25,12 +23,7 @@ public class PrimeNumbersIterator implements Iterator<Integer> {
      * @param sourceArr - for iterate prime numbers
      */
     public PrimeNumbersIterator(int[] sourceArr) {
-        this.storage = new ArrayList<>();
-        for (Integer num : sourceArr) {
-            if (isPrime(num)) {
-                this.storage.add(num);
-            }
-        }
+        this.storage = sourceArr;
     }
 
     /**
@@ -49,7 +42,12 @@ public class PrimeNumbersIterator implements Iterator<Integer> {
      */
     @Override
     public boolean hasNext() {
-        return index < this.storage.size();
+        for (int i = index; i < this.storage.length; i++) {
+            if (isPrime(this.storage[i])) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -59,9 +57,12 @@ public class PrimeNumbersIterator implements Iterator<Integer> {
      */
     @Override
     public Integer next() {
-        if (index >= this.storage.size()) {
-            throw new NoSuchElementException("No such element");
+
+        for (; this.index < this.storage.length; this.index++) {
+            if (isPrime(this.storage[index])) {
+                return this.storage[index++];
+            }
         }
-        return this.storage.get(index++);
+        throw new NoSuchElementException("No such element");
     }
 }

@@ -49,7 +49,7 @@ public class SimpleArrayTest {
     }
 
     /**
-     * When get or update incorrect index throws IndexOutOfBoundsException.
+     * When get incorrect index throws IndexOutOfBoundsException.
      */
     @Test(expected = IndexOutOfBoundsException.class)
     public void whenUpdateIncorrectIndexThenThrowsIndexOutOfBoundsException() {
@@ -60,7 +60,7 @@ public class SimpleArrayTest {
         list.add(4);
         list.add(5);
 
-        list.update(5, 999);
+        list.get(5);
     }
 
     /**
@@ -75,8 +75,8 @@ public class SimpleArrayTest {
         list.add(4);
         list.add(5);
 
-        int result = list.update(2, 999);
-        assertThat(result, is(3));
+        boolean result = list.update(3, 999);
+        assertThat(result, is(true));
         assertThat(list.get(2), is(999));
     }
 

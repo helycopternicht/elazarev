@@ -47,20 +47,18 @@ public class SimpleArray<T> {
     }
 
     /**
-     * Setts element at index specified by param indexToUpdate to value specified by param newValue.
-     * @param indexToUpdate - index of element to update.
-     * @param newValue - new value of element
-     * @throws IndexOutOfBoundsException if indexToUpdate is incorrect
-     * @return - old value
+     * Setts element specified by param oldValue to value specified by param newValue.
+     * @param oldValue - element to update.
+     * @param newValue - new value of element.
+     * @return - true or false
      */
-    public T update(int indexToUpdate, T newValue) {
-        if (indexToUpdate >= this.index) {
-            throw new IndexOutOfBoundsException("Have not element at index " + indexToUpdate);
+    public boolean update(T oldValue, T newValue) {
+        int idx = indexOf(oldValue);
+        if (idx == -1) {
+            return false;
         }
-
-        T oldValue = this.storage[indexToUpdate];
-        this.storage[indexToUpdate] = newValue;
-        return oldValue;
+        this.storage[idx] = newValue;
+        return true;
     }
 
     /**
@@ -69,14 +67,14 @@ public class SimpleArray<T> {
      * @return true if element is deleted and false else
      */
     public boolean delete(T toDelete) {
-        for (int i = 0; i < index; i++) {
-            if (this.storage[i].equals(toDelete)) {
-                System.arraycopy(this.storage, i + 1, this.storage, i, this.storage.length - this.index);
-                this.storage[--this.index] = null;
-                return true;
-            }
+        int elIndex = indexOf(toDelete);
+        if (elIndex == -1) {
+            return false;
         }
-        return false;
+
+        System.arraycopy(this.storage, elIndex + 1, this.storage, elIndex, this.storage.length - this.index);
+        this.storage[--this.index] = null;
+        return true;
     }
 
     /**
@@ -90,6 +88,21 @@ public class SimpleArray<T> {
             throw new IndexOutOfBoundsException("Have not element at index " + index);
         }
         return this.storage[index];
+    }
+
+    /**
+     * Method find index of element specified by param el.
+     * @param el - element to find index
+     * @return -1 if element not exist or index of element
+     */
+    private int indexOf(T el) {
+        int result = -1;
+        for (int i = 0; i < index; i++) {
+            if (this.storage[i].equals(el)) {
+                result = i;
+            }
+        }
+        return result;
     }
 
     /**

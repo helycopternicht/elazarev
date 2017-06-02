@@ -16,6 +16,34 @@ import static org.junit.Assert.assertThat;
 public class DoubleLinkedListTest {
 
     /**
+     * size() test.
+     */
+    @Test
+    public void whenSizeOfListEqualsToCountOfAddedElements() {
+        DoubleLinkedList<String> list = new DoubleLinkedList<>();
+        list.add("one");
+        list.add("two");
+        list.add("three");
+        assertThat(list.size(), is(3));
+    }
+
+    /**
+     * When remove at index then returns removed elements value and removes element.
+     * And when remove nonexistent index then throws IndexOutOfBoundsException.
+     */
+    @Test(expected = IndexOutOfBoundsException.class)
+    public void whenRemoveElementThenSizeIsLessThanWas() {
+        DoubleLinkedList<String> list = new DoubleLinkedList<>();
+        list.add("one");
+        list.add("two");
+        list.add("three");
+        assertThat(list.remove(0), is("one"));
+        assertThat(list.remove(0), is("two"));
+        assertThat(list.remove(0), is("three"));
+        list.remove(0);
+    }
+
+    /**
      * add() and get() methods test.
      */
     @Test(expected = IndexOutOfBoundsException.class)

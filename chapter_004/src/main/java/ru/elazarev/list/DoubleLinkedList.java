@@ -57,20 +57,79 @@ public class DoubleLinkedList<T> implements Iterable<T> {
         if (index >= this.size) {
             throw new IndexOutOfBoundsException();
         }
+        return getNode(index).value;
+    }
 
+    /**
+     * Returns node at specified index.
+     * @param index index to find node
+     * @return node
+     */
+    private Node<T> getNode(int index) {
         if (index < (size / 2)) {
             Node<T> start = this.head;
             for (int i = 0; i < index; i++) {
                 start = start.next;
             }
-            return start.value;
+            return start;
         } else {
             Node<T> start = this.tail;
             for (int i = size - 1; i > index; i--) {
                 start = start.prev;
             }
-            return start.value;
+            return start;
         }
+    }
+
+    /**
+     * Returns count of elements in list.
+     * @return count of elements
+     */
+    public int size() {
+        return size;
+    }
+
+    /**
+     * Removes element at index in list.
+     * @param index index to find element
+     * @return value of element at index
+     */
+    public T remove(int index) {
+        if (index >= this.size || index < 0) {
+            throw new IndexOutOfBoundsException();
+        }
+        Node<T> node = getNode(index);
+        return unlink(node);
+    }
+
+    /**
+     * Unlink node x from list.
+     * @param x node to unlink
+     * @return unlinked node value
+     */
+    private T unlink(Node<T> x) {
+
+        final T element = x.value;
+        final Node<T> next = x.next;
+        final Node<T> prev = x.prev;
+
+        if (prev == null) {
+            head = next;
+        } else {
+            prev.next = next;
+            x.prev = null;
+        }
+
+        if (next == null) {
+            tail = prev;
+        } else {
+            next.prev = prev;
+            x.next = null;
+        }
+
+        x.value = null;
+        size--;
+        return element;
     }
 
     /**

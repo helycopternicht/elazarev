@@ -1,7 +1,9 @@
 package ru.elazarev.generic;
 
 /**
+ * Abstract class store.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
+ * @param <T> type of elements to contain
  * @since 02.06.17
  */
 abstract class AbstractStore<T extends Base>  implements Store<T> {

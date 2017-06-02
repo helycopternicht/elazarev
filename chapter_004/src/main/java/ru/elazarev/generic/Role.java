@@ -31,4 +31,13 @@ public class Role extends Base {
         Role role = (Role) o;
         return getId() != null ? getId().equals(role.getId()) : role.getId() == null;
     }
+
+    /**
+     * HasCode based on id.
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
+    }
 }

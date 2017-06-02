@@ -31,4 +31,13 @@ public class User extends Base {
         User user = (User) o;
         return getId() != null ? getId().equals(user.getId()) : user.getId() == null;
     }
+
+    /**
+     * HasCode based on id.
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
+    }
 }

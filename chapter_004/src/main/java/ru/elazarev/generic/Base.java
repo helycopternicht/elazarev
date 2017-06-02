@@ -10,7 +10,7 @@ abstract class Base {
     /**
      * Id of element.
      */
-    protected String id;
+    private String id;
 
     /**
      * Returns id of base.

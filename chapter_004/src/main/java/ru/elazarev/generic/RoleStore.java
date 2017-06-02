@@ -11,6 +11,6 @@ public class RoleStore<T extends Role> extends AbstractStore<T> {
      * Default constructor.
      */
     public RoleStore() {
-        this.storage = new SimpleArray<>();
+        super(new SimpleArray<>());
     }
 }

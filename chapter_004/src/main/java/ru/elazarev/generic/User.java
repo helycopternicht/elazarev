@@ -11,7 +11,7 @@ public class User extends Base {
      * @param id - user id.
      */
     public User(String id) {
-        this.id = id;
+        this.setId(id);
     }
 
     /**

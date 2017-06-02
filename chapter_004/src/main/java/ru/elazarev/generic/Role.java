@@ -11,7 +11,7 @@ public class Role extends Base {
      * @param id - id of role
      */
     public Role(String id) {
-        this.id = id;
+        this.setId(id);
     }
 
     /**

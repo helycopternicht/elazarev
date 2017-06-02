@@ -10,11 +10,19 @@ abstract class AbstractStore<T extends Base>  implements Store<T> {
     /**
      * Internal storage of user based elements.
      */
-    protected SimpleArray<T> storage;
+    private SimpleArray<T> storage;
+
+    /**
+     * Default constructor.
+     * @param storage inner storage
+     */
+    AbstractStore(SimpleArray<T> storage) {
+        this.storage = storage;
+    }
 
     /**
      * Adds el to store.
-     * @param el - element to edd.
+     * @param el element to edd.
      */
     @Override
     public void add(T el) {
@@ -23,8 +31,8 @@ abstract class AbstractStore<T extends Base>  implements Store<T> {
 
     /**
      * Update oldVal to newVal in store.
-     * @param oldVal - element to update.
-     * @param newVal - update element.
+     * @param oldVal element to update.
+     * @param newVal update element.
      * @return
      */
     @Override
@@ -34,11 +42,27 @@ abstract class AbstractStore<T extends Base>  implements Store<T> {
 
     /**
      * Deletes element el from store.
-     * @param el - element to delete
+     * @param el element to delete
      * @return true if success false else.
      */
     @Override
     public boolean delete(T el) {
         return this.storage.delete(el);
+    }
+
+    /**
+     * Getter for storage field.
+     * @return storage field
+     */
+    public SimpleArray<T> getStorage() {
+        return storage;
+    }
+
+    /**
+     * Storage setter.
+     * @param storage new storage
+     */
+    public void setStorage(SimpleArray<T> storage) {
+        this.storage = storage;
     }
 }

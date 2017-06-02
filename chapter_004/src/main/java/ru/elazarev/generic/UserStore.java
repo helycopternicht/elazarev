@@ -11,6 +11,6 @@ public class UserStore<T extends User> extends AbstractStore<T> {
      * Default constructor.
      */
     public UserStore() {
-        this.storage = new SimpleArray<>();
+        super(new SimpleArray<>());
     }
 }

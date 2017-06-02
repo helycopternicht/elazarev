@@ -7,33 +7,10 @@ package ru.elazarev.generic;
  */
 public class Role extends Base {
     /**
-     * Role id.
-     */
-    private String id;
-
-    /**
      * Default constructor.
      * @param id - id of role
      */
     public Role(String id) {
-        this.id = id;
-    }
-
-    /**
-     * Id getter.
-     * @return id value
-     */
-    @Override
-    String getId() {
-        return id;
-    }
-
-    /**
-     * Id setter.
-     * @param id - new id.
-     */
-    @Override
-    void setId(String id) {
         this.id = id;
     }
 
@@ -53,14 +30,5 @@ public class Role extends Base {
 
         Role role = (Role) o;
         return getId() != null ? getId().equals(role.getId()) : role.getId() == null;
-    }
-
-    /**
-     * HasCode based on id.
-     * @return
-     */
-    @Override
-    public int hashCode() {
-        return getId() != null ? getId().hashCode() : 0;
     }
 }

@@ -6,15 +6,31 @@ package ru.elazarev.generic;
  * @since 29.05.17
  */
 abstract class Base {
+
+    protected String id;
+
     /**
      * Returns id of base.
      * @return string
      */
-    abstract String getId();
+    String getId() {
+        return id;
+    }
 
     /**
      * Set id of element to specified.
      * @param id - new id
      */
-    abstract void setId(String id);
+    void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     * HasCode based on id.
+     * @return
+     */
+    @Override
+    public int hashCode() {
+        return getId() != null ? getId().hashCode() : 0;
+    }
 }

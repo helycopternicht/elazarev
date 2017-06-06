@@ -2,18 +2,18 @@ package ru.elazarev.list;
 
 /**
  * Class to detect cycles in linked list.
+ * @param <T> type of elements in linked list
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 02.06.17
  */
-public class CycleDetector {
+public class CycleDetector<T> {
 
     /**
      * Returns true if linked list head has cycles.
      * @param head linked list to check
-     * @param <T> type of elements in linked list
      * @return true or false
      */
-    public static <T> boolean hasCycle(Node<T> head) {
+    public boolean hasCycle(Node<T> head) {
         if (head == null) {
             return false;
         }
@@ -35,10 +35,9 @@ public class CycleDetector {
      * @param index end of range to check
      * @param head linked list of nodes
      * @param node node to find
-     * @param <T> type of elements in linked list
      * @return true if node in range and false else
      */
-    private static <T> boolean hasCycle(int index, Node<T> head, Node<T> node) {
+    private boolean hasCycle(int index, Node<T> head, Node<T> node) {
         int i = 0;
         while (head != null && i < index) {
             if (node == head) {

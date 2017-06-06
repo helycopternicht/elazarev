@@ -27,7 +27,7 @@ public class CycleDetectorTest {
         third.setNext(four);
         four.setNext(first);
 
-        assertThat(CycleDetector.hasCycle(first), is(true));
+        assertThat(new CycleDetector<Integer>().hasCycle(first), is(true));
     }
 
     /**
@@ -45,6 +45,6 @@ public class CycleDetectorTest {
         third.setNext(four);
         four.setNext(null);
 
-        assertThat(CycleDetector.hasCycle(first), is(false));
+        assertThat(new CycleDetector<Integer>().hasCycle(first), is(false));
     }
 }

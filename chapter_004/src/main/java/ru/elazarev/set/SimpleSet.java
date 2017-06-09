@@ -44,13 +44,18 @@ public class SimpleSet<T> implements Iterable<T> {
      * @param e element to add
      */
     public void add(T e) {
-        for (int i = 0; i < size; i++) {
-            if (storage[i].equals(e)) {
-                return;
-            }
+        int position = Arrays.binarySearch(storage, 0, size, e);
+        if (position > -1) {
+            return;
         }
+
         checkCapacity();
-        storage[size++] = e;
+        position = position * (-1) - 1;
+        if (position < size) {
+            System.arraycopy(storage, position, storage, position + 1, size - position);
+        }
+        storage[position] = e;
+        size++;
     }
 
     /**

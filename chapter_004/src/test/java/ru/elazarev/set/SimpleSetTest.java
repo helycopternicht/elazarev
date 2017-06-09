@@ -27,23 +27,24 @@ public class SimpleSetTest {
     }
 
     /**
-     * Iterator returns elements in order as they added.
+     * Iterator returns elements in asc order.
      */
     @Test(expected = NoSuchElementException.class)
     public void  whenAddTwoEqualsElementsThenIteratorNextReturnElementOnlyOneTime() {
-        SimpleSet<String> set = new SimpleSet<>();
-        set.add("one");
-        set.add("two");
-        set.add("one");
+        SimpleSet<Integer> set = new SimpleSet<>();
+        set.add(2);
+        set.add(1);
+        set.add(2);
 
-        Iterator<String> it = set.iterator();
+        Iterator<Integer> it = set.iterator();
 
         assertThat(set.size(), is(2));
-        assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is("one"));
 
         assertThat(it.hasNext(), is(true));
-        assertThat(it.next(), is("two"));
+        assertThat(it.next(), is(1));
+
+        assertThat(it.hasNext(), is(true));
+        assertThat(it.next(), is(2));
 
         assertThat(it.hasNext(), is(false));
         it.next();

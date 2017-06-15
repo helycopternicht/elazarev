@@ -103,9 +103,9 @@ public class EqualsHashCode {
      */
     @Override
     public int hashCode() {
-        int result;
+        int result = 17;
         long temp;
-        result = (field ? 1 : 0);
+        result = 31 * result + (field ? 1 : 0);
         result = 31 * result + (int) byteField;
         result = 31 * result + (int) shortField;
         result = 31 * result + (int) charField;

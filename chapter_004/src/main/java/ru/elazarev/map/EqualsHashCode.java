@@ -42,7 +42,7 @@ public class EqualsHashCode {
      */
     private double doubleField;
     /**
-     * array
+     * array.
      */
     private int[] arrField;
     /**

@@ -54,4 +54,27 @@ public class TreeTest {
         assertThat(it.hasNext(), is(false));
         it.next();
     }
+
+    /**
+     * isBinary test.
+     */
+    @Test
+    public void whenSomeOfNodeInTreeHasMoreThanTwoElementsThenIsBinaryIsFalseAndViceVersa() {
+        Tree<String> tree = new Tree<>();
+        tree.add("1", "2");
+        tree.add("1", "3");
+        tree.add("1", "4");
+        tree.add("2", "10");
+        tree.add("10", "12");
+
+        assertThat(tree.isBinary(), is(false));
+
+        Tree<String> treeOne = new Tree<>();
+        treeOne.add("1", "2");
+        treeOne.add("1", "3");
+        treeOne.add("2", "10");
+        treeOne.add("10", "12");
+
+        assertThat(treeOne.isBinary(), is(true));
+    }
 }

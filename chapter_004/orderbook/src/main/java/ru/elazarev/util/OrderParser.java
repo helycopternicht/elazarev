@@ -90,10 +90,7 @@ class OrderHandler extends DefaultHandler {
             int volume = Integer.valueOf(attributes.getValue("volume"));
             double price = Double.valueOf(attributes.getValue("price"));
             app.addOrder(bookName, type, id, price, volume);
-            return;
-        }
-
-        if ("DeleteOrder".equals(qName)) {
+        } else if ("DeleteOrder".equals(qName)) {
             String bookName = attributes.getValue("book");
             int id = Integer.valueOf(attributes.getValue("orderId"));
             app.deleteOrder(bookName, id);

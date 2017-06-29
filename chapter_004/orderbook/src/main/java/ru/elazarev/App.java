@@ -72,7 +72,7 @@ public class App {
     public String booksStringRepresentation() {
         StringBuilder sb = new StringBuilder();
         for (OrderBook book : bookList) {
-            sb.append(book.toString() + "\n");
+            sb.append(book.print() + "\n");
         }
         return sb.toString();
     }

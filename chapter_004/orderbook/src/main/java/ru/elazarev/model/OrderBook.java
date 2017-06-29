@@ -125,8 +125,7 @@ public class OrderBook implements Comparable<OrderBook> {
      * Returns string representation of order book.
      * @return string representation of object
      */
-    @Override
-    public String toString() {
+    public String print() {
         StringBuilder sb = new StringBuilder();
         sb.append("Order book: " + getName() + "\n");
         sb.append("BID                ASK\n");
@@ -250,7 +249,7 @@ public class OrderBook implements Comparable<OrderBook> {
     }
 
     /**
-     * Conmarator based on books name.
+     * Comparator based on books name.
      * @param o object to test
      * @return int
      */

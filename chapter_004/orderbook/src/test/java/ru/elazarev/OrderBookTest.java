@@ -109,6 +109,6 @@ public class OrderBookTest {
                    + "15@98.0 - 10@100.0\n"
                    + "----------- - 10@101.1\n";
 
-        assertThat(ob.toString(), is(exp));
+        assertThat(ob.print(), is(exp));
     }
 }

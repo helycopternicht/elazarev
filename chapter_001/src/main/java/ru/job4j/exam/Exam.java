@@ -8,7 +8,7 @@ package ru.job4j.exam;
 public class Exam {
 	/**
 	* Method returns true if param origin contains param sub and
-	* flse else.
+	* false else.
 	* @param origin - string in which the search is performed
 	* @param sub - string we are looking for in origin
 	* @return true if origin contains sub and false else

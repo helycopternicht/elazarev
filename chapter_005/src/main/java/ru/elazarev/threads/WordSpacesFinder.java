@@ -21,11 +21,20 @@ public class WordSpacesFinder {
 
     /**
      * Method calculate counts and prints result.
+     * @throws InterruptedException NOP
      */
-    public void printResult() {
+    public void printResult() throws InterruptedException {
 
-        new Thread(new SpaceFinder(text)).start();
-        new Thread(new WordFinder(text)).start();
+        Thread sp = new Thread(new SpaceFinder(text));
+        Thread wd = new Thread(new WordFinder(text));
+
+        sp.start();
+        wd.start();
+
+        sp.join();
+        wd.join();
+
+        System.out.println("Main thread exits");
     }
 
     /**
@@ -84,6 +93,13 @@ public class WordSpacesFinder {
          */
         @Override
         public void run() {
+
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             int count = 0;
             int idx = -1;
             while ((idx = text.indexOf(" ", idx + 1)) != -1) {

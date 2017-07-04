@@ -10,9 +10,10 @@ import org.junit.Test;
 public class WordSpacesFinderTest {
     /**
      * Starts finder.
+     * @throws InterruptedException NOP
      */
     @Test
-    public void start() {
+    public void start() throws InterruptedException {
         // three words and three spaces
         new WordSpacesFinder(" one two three").printResult();
     }

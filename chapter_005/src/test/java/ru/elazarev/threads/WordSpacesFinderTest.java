@@ -1,4 +1,4 @@
-package ru.elazarev;
+package ru.elazarev.threads;
 
 import org.junit.Test;
 
@@ -8,7 +8,9 @@ import org.junit.Test;
  * @since 04.07.17
  */
 public class WordSpacesFinderTest {
-
+    /**
+     * Starts finder.
+     */
     @Test
     public void start() {
         // three words and three spaces

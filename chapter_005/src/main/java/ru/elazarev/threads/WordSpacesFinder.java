@@ -1,4 +1,4 @@
-package ru.elazarev;
+package ru.elazarev.threads;
 
 /**
  * Class to find count of word and count of spaces in text.
@@ -38,10 +38,10 @@ public class WordSpacesFinder {
         private String text;
 
         /**
-         * Default constructor,
+         * Default constructor.
          * @param text text to find word count.
          */
-        public WordFinder(String text) {
+        WordFinder(String text) {
             this.text = text;
         }
 
@@ -72,10 +72,10 @@ public class WordSpacesFinder {
         private String text;
 
         /**
-         * Default constructor,
+         * Default constructor.
          * @param text text to find word count.
          */
-        public SpaceFinder(String text) {
+        SpaceFinder(String text) {
             this.text = text;
         }
 

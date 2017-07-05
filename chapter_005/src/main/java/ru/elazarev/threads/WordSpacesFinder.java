@@ -1,5 +1,8 @@
 package ru.elazarev.threads;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Class to find count of word and count of spaces in text.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
@@ -72,16 +75,9 @@ public class WordSpacesFinder {
          */
         @Override
         public void run() {
+            Matcher matcher = Pattern.compile("\\w*[^\\s*]").matcher(text);
             int count = 0;
-            String[] arr = text.split(" ");
-
-            for (String st : arr) {
-                if (thread.isInterrupted()) {
-                    return;
-                }
-                if ("".equals(st)) {
-                    continue;
-                }
+            while (matcher.find() && !thread.isInterrupted()) {
                 count++;
             }
             System.out.println(String.format("Words count is %d", count));
@@ -130,7 +126,7 @@ public class WordSpacesFinder {
             int idx = -1;
             while ((idx = text.indexOf(" ", idx + 1)) != -1) {
                 if (thread.isInterrupted()) {
-                    return;
+                    break;
                 }
                 count++;
             }

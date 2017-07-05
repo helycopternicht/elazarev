@@ -30,15 +30,8 @@ public class WordSpacesFinder {
         SpaceFinder sp = new SpaceFinder(text);
         WordFinder wd = new WordFinder(text);
 
-        Thread.sleep(1000);
-        if (sp.getThread().isAlive() || wd.getThread().isAlive()) {
-            sp.getThread().interrupt();
-            wd.getThread().interrupt();
-            System.out.println("Threads are interrupted");
-        }
-
-        sp.getThread().join();
-        wd.getThread().join();
+        sp.getThread().join(1000);
+        wd.getThread().join(1000);
 
         System.out.println("Calculation ends.");
     }

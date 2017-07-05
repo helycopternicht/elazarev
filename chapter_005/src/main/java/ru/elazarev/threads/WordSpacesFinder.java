@@ -33,6 +33,13 @@ public class WordSpacesFinder {
         sp.getThread().join(1000);
         wd.getThread().join(1000);
 
+        if (sp.getThread().isAlive()) {
+            sp.getThread().interrupt();
+        }
+        if (wd.getThread().isAlive()) {
+            wd.getThread().interrupt();
+        }
+
         System.out.println("Calculation ends.");
     }
 

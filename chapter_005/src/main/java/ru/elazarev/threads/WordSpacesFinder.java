@@ -121,14 +121,14 @@ public class WordSpacesFinder {
          */
         @Override
         public void run() {
-
             int count = 0;
-            int idx = -1;
-            while ((idx = text.indexOf(" ", idx + 1)) != -1) {
+            for (int i = 0; i < text.length(); i++) {
                 if (thread.isInterrupted()) {
                     break;
                 }
-                count++;
+                if (" ".charAt(0) == text.charAt(i)) {
+                    count++;
+                }
             }
             System.out.println(String.format("Spaces count is %d", count));
         }

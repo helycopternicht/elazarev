@@ -28,7 +28,7 @@ public class Counter {
      * Getter for count field.
      * @return int
      */
-    public synchronized int getCount() {
+    public int getCount() {
         return count;
     }
 }

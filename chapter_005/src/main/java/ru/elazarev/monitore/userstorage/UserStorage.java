@@ -1,5 +1,8 @@
 package ru.elazarev.monitore.userstorage;
 
+import net.jcip.annotations.GuardedBy;
+import net.jcip.annotations.ThreadSafe;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,11 +11,13 @@ import java.util.Map;
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 19.07.17
  */
+@ThreadSafe
 public class UserStorage {
 
     /**
      * Users map where key is users id and value is user.
      */
+    @GuardedBy("this")
     private Map<Integer, User> users;
 
     /**
@@ -50,7 +55,6 @@ public class UserStorage {
      * @param usr user to update
      */
     public synchronized void update(User usr) {
-        users.remove(usr.getId());
         users.put(usr.getId(), usr);
     }
 
@@ -77,20 +81,12 @@ public class UserStorage {
 
         User fromUser = users.get(sendersId);
         User toUser = users.get(receiversId);
-        if (fromUser == null || toUser == null) {
+        if (fromUser.getMoney() < amount) {
             return false;
         }
 
-        synchronized (fromUser) {
-            synchronized (toUser) {
-                if (fromUser.getMoney() < amount) {
-                    return false;
-                }
-
-                fromUser.setMoney(fromUser.getMoney() - amount);
-                toUser.setMoney(toUser.getMoney() + amount);
-            }
-        }
+        fromUser.setMoney(fromUser.getMoney() - amount);
+        toUser.setMoney(toUser.getMoney() + amount);
         return true;
     }
 }

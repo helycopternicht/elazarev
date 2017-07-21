@@ -1,4 +1,4 @@
-package ru.elazarev.monitore;
+package ru.elazarev.monitore.counter;
 
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;

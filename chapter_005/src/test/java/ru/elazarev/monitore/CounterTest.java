@@ -1,6 +1,7 @@
 package ru.elazarev.monitore;
 
 import org.junit.Test;
+import ru.elazarev.monitore.counter.Counter;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;

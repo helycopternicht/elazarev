@@ -54,15 +54,13 @@ public class TextFinderParallel {
 
         filter = new FileFilter() {
 
-            private final List<String> extList = extensions;
-
             @Override
             public boolean accept(File file) {
                 return file.isDirectory() || endsWith(file.getPath());
             }
 
             public boolean endsWith(String path) {
-                for (String ext : extList) {
+                for (String ext : extensions) {
                     if (path.endsWith("." +  ext)) {
                         return true;
                     }

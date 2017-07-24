@@ -16,18 +16,30 @@ public class SimpleBlockingQueue<E> {
     private Queue<E> queue;
 
     /**
-     * Default constructor.
+     * Maximum queue size.
      */
-    public SimpleBlockingQueue() {
+    private int maxSize;
+
+    /**
+     * Default constructor.
+     * @param maxSize maximum queue size
+     */
+    public SimpleBlockingQueue(int maxSize) {
+        this.maxSize = maxSize;
         queue = new LinkedList();
     }
 
     /**
-     * Method adds elemt to blocking queue.
+     * Method adds element to blocking queue.
      * @param el element to add.
+     * @throws InterruptedException if thread is interrupted
      */
-    public void push(E el) {
+    public void push(E el) throws InterruptedException {
         synchronized (this) {
+            if (queue.size() >= maxSize) {
+                this.wait();
+            }
+
             queue.add(el);
             this.notify();
         }
@@ -46,7 +58,9 @@ public class SimpleBlockingQueue<E> {
                     e.printStackTrace();
                 }
             }
-            return queue.remove();
+            E tmp = queue.remove();
+            this.notify();
+            return tmp;
         }
     }
 }

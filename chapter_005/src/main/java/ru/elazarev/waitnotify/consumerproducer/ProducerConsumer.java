@@ -15,7 +15,13 @@ public class ProducerConsumer {
      * Default constructor. Starts threads.
      */
     public ProducerConsumer() {
-        queue = new SimpleBlockingQueue<>();
+        queue = new SimpleBlockingQueue<>(50);
+    }
+
+    /**
+     * Starting threads.
+     */
+    public void execute() {
         Thread producer = new Producer("Producer");
         Thread consumer1 = new Consumer("Consumer1");
         Thread consumer2 = new Consumer("Consumer2");
@@ -30,7 +36,8 @@ public class ProducerConsumer {
      * @param args list of args
      */
     public static void main(String[] args) {
-        new ProducerConsumer();
+        ProducerConsumer pc = new ProducerConsumer();
+        pc.execute();
     }
 
     /**
@@ -52,7 +59,11 @@ public class ProducerConsumer {
         public void run() {
             for (int i = 0; i < 100; i++) {
                 System.out.println("Produced :" + i);
-                queue.push(i);
+                try {
+                    queue.push(i);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

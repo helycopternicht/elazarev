@@ -13,12 +13,12 @@ public class SimpleBlockingQueue<E> {
     /**
      * Queue to store elements.
      */
-    private Queue<E> queue;
+    private final Queue<E> queue;
 
     /**
      * Maximum queue size.
      */
-    private int maxSize;
+    private final int maxSize;
 
     /**
      * Default constructor.

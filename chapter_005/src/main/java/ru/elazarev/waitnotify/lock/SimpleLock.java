@@ -16,14 +16,13 @@ public class SimpleLock {
      */
     public synchronized void lock() {
         Thread curThread = Thread.currentThread();
-        if (owner == null) {
-            owner = curThread;
-        } else if (owner != curThread) {
+        while (!(owner == null) &&   (owner != curThread)) {
             try {
                 this.wait();
             } catch (InterruptedException ignore) {
             }
         }
+        owner = curThread;
     }
 
     /**

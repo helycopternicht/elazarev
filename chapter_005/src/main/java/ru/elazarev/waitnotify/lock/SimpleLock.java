@@ -16,7 +16,7 @@ public class SimpleLock {
      */
     public synchronized void lock() {
         Thread curThread = Thread.currentThread();
-        while (!(owner == null) &&   (owner != curThread)) {
+        while (!(owner == null) && (owner != curThread)) {
             try {
                 this.wait();
             } catch (InterruptedException ignore) {

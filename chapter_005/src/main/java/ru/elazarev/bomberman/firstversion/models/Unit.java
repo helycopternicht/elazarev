@@ -67,8 +67,8 @@ public abstract class Unit extends Thread {
                     getCell().unlock();
                 }
             }
-            setCell(newCell);
             getCell().unlock();
+            setCell(newCell);
             System.out.println(Thread.currentThread().getName() + " success lock " + newCell);
         }
     }

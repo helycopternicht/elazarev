@@ -64,12 +64,12 @@ public abstract class Unit extends Thread {
                 try {
                     successLock = newCell.tryLock(500, TimeUnit.MILLISECONDS);
                 } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    getCell().unlock();
                 }
             }
-            System.out.println(Thread.currentThread().getName() + " success lock " + newCell);
-            getCell().unlock();
             setCell(newCell);
+            getCell().unlock();
+            System.out.println(Thread.currentThread().getName() + " success lock " + newCell);
         }
     }
 

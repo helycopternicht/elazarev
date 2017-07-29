@@ -45,7 +45,6 @@ public class NonBlockingCash {
      * @param m new model
      */
     public void update(int key, Model m) {
-        int version = m.getVersion();
         storage.computeIfPresent(key, new BiFunction<Integer, Model, Model>() {
             @Override
             public Model apply(Integer integer, Model model) {

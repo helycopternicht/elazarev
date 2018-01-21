@@ -9,7 +9,7 @@ abstract class AbstractMenuAction implements MenuAction {
 
     /**
      * Returns info about action.
-     * @return
+     * @return formatted string about current action.
      */
     @Override
     public String info() {

@@ -5,21 +5,42 @@ import ru.elazarev.model.database.ConnectionManager;
 import ru.elazarev.model.database.JDBCUtils;
 import ru.elazarev.model.exceptions.NoSuchElementException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Data access object class for File table.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 22.12.17
  */
 public class FileDao implements Dao<File> {
-
+    /**
+     * Request text for getting file by id.
+     */
     private static final String GET_BY_ID = "SELECT * FROM files WHERE id = ?;";
+    /**
+     * Request text for getting all files.
+     */
     private static final String GET_ALL = "SELECT * FROM files;";
+    /**
+     * Request text for create file.
+     */
     private static final String CREATE = "INSERT INTO files(url) VALUES (?);";
+    /**
+     * Request text for delete file.
+     */
     private static final String DELETE = "DELETE FROM files WHERE id = ?;";
 
+    /**
+     * Creates file in bd.
+     * @param e file model.
+     * @return updated file model with real id.
+     */
     @Override
     public File create(File e) {
         Connection conn = ConnectionManager.getConnection();
@@ -36,14 +57,19 @@ public class FileDao implements Dao<File> {
             }
 
         } catch (SQLException e1) {
-            // TODO: make with exception
-            e1.printStackTrace();
+            /*there should be logging*/
         } finally {
             JDBCUtils.closeAllQuietly(rs, pst, conn);
         }
         return e;
     }
 
+    /**
+     * Returns file by id.
+     * @param id id of file in bd.
+     * @return file model.
+     * @throws NoSuchElementException if no file with such id in bd.
+     */
     @Override
     public File getById(int id) throws NoSuchElementException {
         Connection conn = ConnectionManager.getConnection();
@@ -69,11 +95,22 @@ public class FileDao implements Dao<File> {
         throw new NoSuchElementException("");
     }
 
+    /**
+     * Unsupported operation.
+     * @param e file model.
+     * @throws NoSuchElementException no throws.
+     */
     @Override
     public void update(File e) throws NoSuchElementException {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Deletes file from bd.
+     * @param e file model.
+     * @return true if success.
+     * @throws NoSuchElementException if no file with such id in bd.
+     */
     @Override
     public boolean delete(File e) throws NoSuchElementException {
         Connection conn = ConnectionManager.getConnection();
@@ -94,6 +131,10 @@ public class FileDao implements Dao<File> {
         return false;
     }
 
+    /**
+     * Returns all files in bd.
+     * @return list of file models.
+     */
     @Override
     public List<File> getAll() {
         Connection conn = ConnectionManager.getConnection();
@@ -110,8 +151,7 @@ public class FileDao implements Dao<File> {
                         rs.getString("url")));
             }
         } catch (SQLException e) {
-            // TODO: make with exception
-            e.printStackTrace();
+            /*there should be logging*/
         } finally {
             JDBCUtils.closeAllQuietly(rs, st, conn);
         }

@@ -1,11 +1,9 @@
 package ru.elazarev;
 
-
 import ru.elazarev.auth.Authorization;
 import ru.elazarev.input.ConsoleInput;
 import ru.elazarev.input.Input;
 import ru.elazarev.menu.MainMenu;
-import ru.elazarev.model.*;
 import ru.elazarev.model.database.CreateDataBase;
 
 /**
@@ -25,15 +23,12 @@ public class StartUI {
      */
     private MainMenu menu;
 
-    private Authorization auth;
-
     /**
      * Default constructor.
      * @param input - Input interface implementation.
      */
     public StartUI(Input input) {
         this.input = input;
-        this.auth = new Authorization();
         this.menu = new MainMenu(this.input);
     }
 
@@ -41,13 +36,9 @@ public class StartUI {
      * Method to start user interface.
      */
     public void init() {
-
+        CreateDataBase.createDbIfNotExist();
         printGreeting();
-
-        //menu.showMenu();
-        //menu.selectAction();
-        CreateDataBase.CreateDbIfNotExist();
-
+        menu.showMenu();
     }
 
     /**
@@ -60,7 +51,7 @@ public class StartUI {
         System.out.println("Authorization. Please enter:");
 
         String login = input.ask("login:");
-        String password = input.ask("password");
+        String password = input.ask("password:");
         boolean result = Authorization.login(login, password);
         if (!result) {
             System.out.println("Credential is incorrect!");

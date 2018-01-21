@@ -1,15 +1,24 @@
 package ru.elazarev.menu;
 
+import ru.elazarev.auth.Authorization;
 import ru.elazarev.input.Input;
+import ru.elazarev.model.RequestCategory;
+import ru.elazarev.model.RequestStatus;
+import ru.elazarev.model.User;
+import ru.elazarev.model.UserRequest;
+import ru.elazarev.model.dao.RequestCategoryDao;
+import ru.elazarev.model.dao.UserDao;
+import ru.elazarev.model.dao.UserRequestDao;
+import ru.elazarev.model.exceptions.NoSuchElementException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class Menu for Tracker app.
+ * Users main menu for Tracker app.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 13.04.17
  */
-public class MainMenu {
+public class MainMenu extends AbstractMenu {
 
     /**
      * Object to getting user input.
@@ -26,53 +35,65 @@ public class MainMenu {
      * @param input - user input object
      */
     public MainMenu(Input input) {
-        this.actions = new ArrayList<>();
         this.input = input;
-        this.fillActions();
     }
 
     /**
      * Method fills menu actions.
      */
     public void fillActions() {
+        this.actions = new ArrayList<>();
         this.actions.add(new ExitAction());
-        this.actions.add(new ShowAllAction());
         this.actions.add(new AddAction());
+        this.actions.add(new ShowAllAction());
         this.actions.add(new FindAction());
+        this.actions.add(new ChangePasswordAction());
+        if (Authorization.getUser().isAdmin()) {
+            this.actions.add(new EditUsersAction());
+        }
     }
 
     /**
      * Method shows menu to user.
      */
+    @Override
     public void showMenu() {
+        this.fillActions();
         for (MenuAction action : this.actions) {
             System.out.println(action.info());
         }
-    }
-
-    /**
-     * Me  thod ask user about action and perform it.
-     */
-    public void selectAction() {
-        int key = this.input.ask("Select action:", this.getRangeOfKeys());
-        for (MenuAction action : this.actions) {
-            if (action.key() == key) {
-                action.performAction();
-                break;
-            }
-        }
+        selectAction();
     }
 
     /**
      * Returns range of menu keys.
      * @return - int[]
      */
-    private int[] getRangeOfKeys() {
+    @Override
+    public int[] getRangeOfKeys() {
         int[] range = new int[actions.size()];
         for (int i = 0; i < actions.size(); i++) {
             range[i] = this.actions.get(i).key();
         }
         return range;
+    }
+
+    /**
+     * Returns all menu actions.
+     * @return list of all menu actions.
+     */
+    @Override
+    public List<MenuAction> getMenuActions() {
+        return this.actions;
+    }
+
+    /**
+     * User input object.
+     * @return user input.
+     */
+    @Override
+    public Input getInput() {
+        return this.input;
     }
 
     /**
@@ -95,7 +116,7 @@ public class MainMenu {
          */
         @Override
         public String name() {
-            return "Add new task";
+            return "Add new request";
         }
 
         /**
@@ -103,9 +124,24 @@ public class MainMenu {
          */
         @Override
         public void performAction() {
-            String name = input.ask("Please enter name of the task: ");
-            String desc = input.ask("Please enter description of the task: ");
+            System.out.println("ADDING NEW REQUEST");
+            System.out.println("Enter request fields:");
+            String title = input.ask("Title: ");
+            String description = input.ask("Description: ");
+            String category = input.ask("Category: ");
 
+            RequestCategoryDao rcdao = new RequestCategoryDao();
+            RequestCategory rc = null;
+            try {
+                rc = rcdao.getByName(category);
+            } catch (NoSuchElementException e) {
+                rc = rcdao.create(new RequestCategory(-1, category));
+            }
+
+            UserRequestDao urdao = new UserRequestDao();
+            urdao.create(new UserRequest(-1, title, description, null, Authorization.getUser(), rc, RequestStatus.CREATED));
+            System.out.println("added....");
+            showMenu();
         }
     }
 
@@ -119,7 +155,7 @@ public class MainMenu {
          */
         @Override
         public int key() {
-            return 0;
+            return 2;
         }
 
         /**
@@ -128,7 +164,7 @@ public class MainMenu {
          */
         @Override
         public String name() {
-            return "Show all tasks";
+            return "Show all requests";
         }
 
         /**
@@ -136,10 +172,12 @@ public class MainMenu {
          */
         @Override
         public void performAction() {
-//            System.out.println("All tasks:");
-//            for (TrackerItem item : tracker.findAll()) {
-//                System.out.println(item);
-//            }
+            List<UserRequest> list = new UserRequestDao().getAll();
+            System.out.printf("ALL REQUESTS: %s\n", list.size());
+            for (UserRequest item : list) {
+                System.out.println(item);
+            }
+            showMenu();
         }
     }
 
@@ -154,7 +192,7 @@ public class MainMenu {
          */
         @Override
         public int key() {
-            return 4;
+            return 3;
         }
 
         /**
@@ -163,7 +201,7 @@ public class MainMenu {
          */
         @Override
         public String name() {
-            return "Find tasks by name";
+            return "Find some request";
         }
 
         /**
@@ -171,65 +209,109 @@ public class MainMenu {
          */
         @Override
         public void performAction() {
-//            System.out.println("Filtering...");
-//            String substr = input.ask("Enter substring for search:");
-//            for (TrackerItem item : tracker.filterByName(substr)) {
-//                System.out.println(item);
-//            }
+            new SearchMenu(input, MainMenu.this).showMenu();
         }
     }
 
+    /**
+     * Class to perform exit from app action.
+     */
     class ExitAction extends AbstractMenuAction {
-
+        /**
+         * Returns key of action.
+         * @return key.
+         */
         @Override
         public int key() {
             return 0;
         }
 
+        /**
+         * Returns name of action.
+         * @return name of action.
+         */
         @Override
         public String name() {
-            return "Exit";
+            return "Exit tracker";
         }
 
+        /**
+         * Performs exit action.
+         */
         @Override
         public void performAction() {
             System.exit(0);
         }
     }
 
+    /**
+     * Class to perform change password action.
+     */
     class ChangePasswordAction extends AbstractMenuAction {
-
+        /**
+         * Returns key of action.
+         * @return key.
+         */
         @Override
         public int key() {
-            return 0;
+            return 4;
         }
-
+        /**
+         * Returns name of action.
+         * @return name of action.
+         */
         @Override
         public String name() {
-            return "Exit";
+            return "Change password";
         }
 
+        /**
+         * Request new password and write it ro bd.
+         */
         @Override
         public void performAction() {
-            System.exit(0);
+            String newPassword = input.ask("enter new password: ");
+            User curUser = Authorization.getUser();
+            curUser.setPassword(newPassword);
+
+            try {
+                new UserDao().update(curUser);
+            } catch (NoSuchElementException e) {
+                /*there should be logging*/
+            }
+            System.out.println("updated...");
+            showMenu();
+
         }
     }
 
+    /**
+     * Class to open users edit menu.
+     */
     class EditUsersAction extends AbstractMenuAction {
-
+        /**
+         * Returns key of action.
+         * @return key.
+         */
         @Override
         public int key() {
-            return 0;
+            return 5;
         }
-
+        /**
+         * Returns name of action.
+         * @return name of action.
+         */
         @Override
         public String name() {
-            return "Exit";
+            return "Manage users";
         }
 
+        /**
+         * Opens Users edit menu.
+         */
         @Override
         public void performAction() {
-            System.exit(0);
+            new UsersMenu(input, MainMenu.this).showMenu();
         }
     }
 }

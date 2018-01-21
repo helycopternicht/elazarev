@@ -5,13 +5,20 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
+ * Class singleton for holding connection to data base.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 21.12.17
  */
 public class ConnectionManager {
-
+    /**
+     * Connection instance.
+     */
     private static Connection conn;
 
+    /**
+     * Creates or returns connection to db.
+     * @return connection.
+     */
     public static Connection getConnection() {
 
         if (conn == null) {

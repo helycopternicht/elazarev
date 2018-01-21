@@ -5,21 +5,43 @@ import ru.elazarev.model.database.ConnectionManager;
 import ru.elazarev.model.database.JDBCUtils;
 import ru.elazarev.model.exceptions.NoSuchElementException;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.sql.SQLException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * Data access object for Comment table.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 22.12.17
  */
 public class CommentDao implements Dao<Comment> {
-
+    /**
+     * Request for getting comment by id.
+     */
     private static final String GET_BY_ID = "SELECT * FROM comments WHERE id = ?;";
+    /**
+     * Request for getting all comments.
+     */
     private static final String GET_ALL = "SELECT * FROM comments;";
-    private static final String CREATE = "INSERT INTO comments(author_id, comment) VALUES (?,?);";
+    /**
+     * Request for creating new comment.
+     */
+    private static final String CREATE = "INSERT INTO comments(author_id, comment, request_id) VALUES (?,?,?);";
+    /**
+     * Request for deleting comment.
+     */
     private static final String DELETE = "DELETE FROM comments WHERE id = ?;";
 
+    /**
+     * Creates comment in bd.
+     * @param e Comment
+     * @return updated comment with real id.
+     */
     @Override
     public Comment create(Comment e) {
         Connection conn = ConnectionManager.getConnection();
@@ -29,6 +51,7 @@ public class CommentDao implements Dao<Comment> {
             pst = conn.prepareStatement(CREATE, Statement.RETURN_GENERATED_KEYS);
             pst.setInt(1, e.getAuthor().getId());
             pst.setString(2, e.getComment());
+            pst.setInt(3, e.getRequestId());
             pst.executeUpdate();
 
             rs = pst.getGeneratedKeys();
@@ -38,14 +61,19 @@ public class CommentDao implements Dao<Comment> {
             }
 
         } catch (SQLException e1) {
-            // TODO: make with exception
-            e1.printStackTrace();
+            /*there should be logging*/
         } finally {
             JDBCUtils.closeAllQuietly(rs, pst, conn);
         }
         return e;
     }
 
+    /**
+     * Returns comment by ist id.
+     * @param id id of comment.
+     * @return comment
+     * @throws NoSuchElementException if no comment with such id in db.
+     */
     @Override
     public Comment getById(int id) throws NoSuchElementException {
         Connection conn = ConnectionManager.getConnection();
@@ -62,7 +90,8 @@ public class CommentDao implements Dao<Comment> {
                         rs.getInt("id"),
                         udao.getById(rs.getInt("author_id")),
                         rs.getString("comment"),
-                        rs.getTimestamp("create_date").toLocalDateTime());
+                        rs.getTimestamp("create_date").toLocalDateTime(),
+                        rs.getInt("request_id"));
             }
 
         } catch (SQLException e) {
@@ -73,11 +102,22 @@ public class CommentDao implements Dao<Comment> {
         throw new NoSuchElementException("");
     }
 
+    /**
+     * Unsupported operation.
+     * @param e comment.
+     * @throws NoSuchElementException no throws.
+     */
     @Override
     public void update(Comment e) throws NoSuchElementException {
         throw new UnsupportedOperationException();
     }
 
+    /**
+     * Deletes comment from db if exists.
+     * @param e comment to delete.
+     * @return true if success.
+     * @throws NoSuchElementException if no comment with such id in db.
+     */
     @Override
     public boolean delete(Comment e) throws NoSuchElementException {
         Connection conn = ConnectionManager.getConnection();
@@ -98,6 +138,10 @@ public class CommentDao implements Dao<Comment> {
         return false;
     }
 
+    /**
+     * Returns list of all comments in db.
+     * @return list of comments.
+     */
     @Override
     public List<Comment> getAll() {
         Connection conn = ConnectionManager.getConnection();
@@ -113,14 +157,13 @@ public class CommentDao implements Dao<Comment> {
                         rs.getInt("id"),
                         udao.getById(rs.getInt("author_id")),
                         rs.getString("comment"),
-                        rs.getTimestamp("create_date").toLocalDateTime()));
+                        rs.getTimestamp("create_date").toLocalDateTime(),
+                        rs.getInt("request_id")));
             }
         } catch (SQLException e) {
-            // TODO: make with exception
-            e.printStackTrace();
+            /*there should be logging*/
         } catch (NoSuchElementException e) {
-            // TODO: make with exception
-            e.printStackTrace();
+            /*there should be logging*/
         } finally {
             JDBCUtils.closeAllQuietly(rs, st, conn);
         }

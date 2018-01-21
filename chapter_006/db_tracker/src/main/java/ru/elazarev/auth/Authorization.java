@@ -5,20 +5,22 @@ import ru.elazarev.model.dao.UserDao;
 import ru.elazarev.model.exceptions.NoSuchElementException;
 
 /**
+ * Class for user authorisation.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 26.12.17
  */
 public class Authorization {
-
+    /**
+     * Contains current session user.
+     */
     private static User currentUser;
 
-    public static boolean loggedIn() {
-        if (currentUser != null) {
-            return true;
-        }
-        return false;
-    }
-
+    /**
+     * Trying to log in app.
+     * @param login users login.
+     * @param password users password.
+     * @return true if login and password are correct.
+     */
     public static boolean login(String login, String password) {
         UserDao udao = new UserDao();
         try {
@@ -33,4 +35,11 @@ public class Authorization {
         return false;
     }
 
+    /**
+     * Returns user of current session.
+     * @return user.
+     */
+    public static User getUser() {
+        return currentUser;
+    }
 }

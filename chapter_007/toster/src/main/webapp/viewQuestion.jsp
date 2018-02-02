@@ -10,14 +10,13 @@
     <div class="question">
         <i>create date: ${question.createDate}</i><br>
         <i>author: ${question.author.login}</i><br>
-        <strong>Solved: ${question.solution != null}</strong><br>
         <strong>Description:</strong>
         <p>${question.description}</p>
     </div>
 
     <div class="answers">
         <h3>Answers</h3>
-        <c:forEach items="answers" var="a">
+        <c:forEach items="${answers}" var="a">
             <div class="answer">
                 <i>Author: ${a.author.login}</i><br>
                 <i>date: ${a.createdDate}</i><br>
@@ -35,6 +34,8 @@
         </textarea><br>
         <input type="submit" value="send">
     </form>
+
+    <a href="index">Question list</a>
 
 </body>
 </html>

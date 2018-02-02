@@ -4,6 +4,7 @@
     <title>Login</title>
 </head>
 <body>
+    <h1>Sign in</h1>
     <form action="login" method="POST">
         <label>Login</label>
         <input type="text" name="login">

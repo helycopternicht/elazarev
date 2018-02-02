@@ -1,9 +1,13 @@
 package ru.elazarev.servlets;
 
-import ru.elazarev.models.CategoryModel;
-import ru.elazarev.models.QuestionModel;
-import ru.elazarev.models.UserModel;
+import ru.elazarev.database.EntityManagerF;
+import ru.elazarev.filters.AuthorizationFilter;
+import ru.elazarev.models.Category;
+import ru.elazarev.models.Question;
+import ru.elazarev.models.User;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,20 +29,36 @@ public class AddQuestionServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
+        User user = (User) session.getAttribute(AuthorizationFilter.ATTRIBUTE_USER);
 
         String title = req.getParameter("title");
         String description = req.getParameter("description");
         String stringCategorys = req.getParameter("category");
 
-        List<CategoryModel> categorys = new ArrayList<>();
-        for (String cat : stringCategorys.split(";")) {
-            new CategoryModel(1, cat);
+        EntityManager em = EntityManagerF.getFactory().createEntityManager();
+
+        List<Category> categorys = new ArrayList<>();
+        Category c = null;
+
+        em.getTransaction().begin();
+        Question question = new Question(user, LocalDateTime.now(), title, description);
+        em.persist(question);
+
+        for (String name : stringCategorys.split(";")) {
+            Query query = em.createQuery("select c from Category c where c.name = :name");
+            query.setParameter("name", name);
+            try {
+                c = (Category) query.getSingleResult();
+            } catch (Exception ex) {
+                c = new Category(name);
+                em.persist(c);
+            }
+            question.addCategory(c);
         }
-
-        QuestionModel q = new QuestionModel(6, (UserModel) session.getAttribute("user"),
-                LocalDateTime.now(), title, categorys, description, null, null);
-
-        resp.getWriter().append(q.toString());
+        em.persist(question);
+        em.getTransaction().commit();
+        em.close();
+        resp.sendRedirect("viewQuestion?id=" + question.getId());
     }
 
     @Override

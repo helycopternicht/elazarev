@@ -1,31 +1,38 @@
 package ru.elazarev.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+
 /**
  * Model for users.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 24.01.18
  */
-public class UserModel {
-
+@Entity
+@Table(name = "users")
+public class User {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id")
     private int id;
 
+    @Column(name = "login")
     private String login;
 
+    @Column(name = "password")
     private String password;
 
+    @Column(name = "email")
     private String email;
 
+    @Column(name = "is_admin")
     private boolean isAdmin;
 
-    public UserModel(int id, String login, String password, String email, boolean isAdmin) {
-        this.id = id;
-        this.login = login;
-        this.password = password;
-        this.email = email;
-        this.isAdmin = isAdmin;
+    public User() {
     }
 
-    public UserModel(String login, String password, String email, boolean isAdmin) {
+    public User(String login, String password, String email, boolean isAdmin) {
         this.login = login;
         this.password = password;
         this.email = email;

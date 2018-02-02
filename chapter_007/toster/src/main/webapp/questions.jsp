@@ -12,14 +12,6 @@
         <div class="question">
             <a href="viewQuestion?id=${question.id}">${question.title}</a>
             <div>${question.description}</div>
-            <c:choose>
-                <c:when test="${question.solution != null}">
-                    <strong>Have solution!</strong>
-                </c:when>
-                <c:otherwise>
-                    <strong>Not resolved</strong>
-                </c:otherwise>
-            </c:choose>
         </div>
     </c:forEach>
 

@@ -18,7 +18,6 @@ import java.io.IOException;
 @WebFilter(urlPatterns = "/*")
 public class AuthorizationFilter implements Filter {
 
-    public static final String ATTRIBUTE_REQUESTED_URL = "requestedURL";
     public static final String ATTRIBUTE_USER = "user";
 
     @Override
@@ -31,7 +30,7 @@ public class AuthorizationFilter implements Filter {
         HttpSession session = req.getSession();
         Object user = session.getAttribute(ATTRIBUTE_USER);
         String uri = req.getRequestURI();
-        if (user == null && !uri.endsWith(".jsp") && !uri.endsWith("login")) {
+        if (user == null && !uri.endsWith("login")) {
             req.getRequestDispatcher("/login").forward(servletRequest, servletResponse);
         } else {
             filterChain.doFilter(servletRequest, servletResponse);

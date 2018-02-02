@@ -1,22 +1,29 @@
 package ru.elazarev.models;
 
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+
 /**
  * Model for question categorys.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 24.01.18
  */
-public class CategoryModel {
-
+@Entity
+@Table(name = "categorys")
+public class Category {
+    @Id
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @Column(name = "id")
     private int id;
 
+    @Column(name = "name")
     private String name;
 
-    public CategoryModel(int id, String name) {
-        this.id = id;
-        this.name = name;
+    public Category() {
     }
 
-    public CategoryModel(String name) {
+    public Category(String name) {
         this.name = name;
     }
 

@@ -1,7 +1,7 @@
 package ru.elazarev.servlets;
 
 import ru.elazarev.database.ConnectionFactory;
-import ru.elazarev.models.Question;
+import ru.elazarev.models.User;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
- * Show question info and answer form.
+ * Servlet for remove user from bd.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
- * @since 26.01.18
+ * @since 03.02.18
  */
-@WebServlet("/viewQuestion")
-public class ViewQuestionServlet extends HttpServlet {
+@WebServlet("/users/remove")
+public class DeleteUserServlet extends HttpServlet {
     /**
-     * Get data from database and show from.
+     * Process user removing.
      * @param req request.
      * @param resp response.
      * @throws ServletException if error occur.
@@ -27,26 +27,27 @@ public class ViewQuestionServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String stringId = req.getParameter("id");
+        String stringID = req.getParameter("id");
         int id = 0;
         try {
-            id = Integer.valueOf(stringId);
+            id = Integer.valueOf(stringID);
         } catch (NumberFormatException ex) {
-            resp.sendError(404);
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
 
         EntityManager em = ConnectionFactory.getFactory().createEntityManager();
-        Question question = em.find(Question.class, id);
-        if (question == null) {
-            resp.sendError(404);
+        User user = em.find(User.class, id);
+        if (user == null) {
+            resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
+
+        em.getTransaction().begin();
+        em.remove(user);
+        em.getTransaction().commit();
         em.close();
 
-        req.setAttribute("question", question);
-        req.setAttribute("answers", question.getAnswers());
-
-        req.getRequestDispatcher("viewQuestion.jsp").forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/users");
     }
 }

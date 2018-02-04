@@ -1,22 +1,29 @@
 package ru.elazarev.listeners;
 
-import ru.elazarev.database.EntityManagerF;
-import javax.persistence.EntityManagerFactory;
+import ru.elazarev.database.ConnectionFactory;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 /**
+ * Listener close Entity manager factory when context destroy.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 30.01.18
  */
 public class InitialDbListener implements ServletContextListener {
+    /**
+     * Empty method.
+     * @param servletContextEvent servlet context.
+     */
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        EntityManagerFactory factory = EntityManagerF.getFactory();
     }
 
+    /**
+     * Close entity manegr factory.
+     * @param servletContextEvent servlet context.
+     */
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
-        EntityManagerF.getFactory().close();
+        ConnectionFactory.getFactory().close();
     }
 }

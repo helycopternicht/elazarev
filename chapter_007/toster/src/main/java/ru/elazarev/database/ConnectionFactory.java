@@ -8,7 +8,7 @@ import javax.persistence.Persistence;
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 30.01.18
  */
-public class EntityManagerF {
+public class ConnectionFactory {
     /**
      * Factory store.
      */
@@ -25,6 +25,6 @@ public class EntityManagerF {
     /**
      * Private constructor.
      */
-    private EntityManagerF() {
+    private ConnectionFactory() {
     }
 }

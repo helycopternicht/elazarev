@@ -1,7 +1,7 @@
 package ru.elazarev.servlets;
 
 import ru.elazarev.database.ConnectionFactory;
-import ru.elazarev.models.Question;
+import ru.elazarev.models.User;
 
 import javax.persistence.EntityManager;
 import javax.servlet.ServletException;
@@ -10,18 +10,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
 
 /**
- * Servlet to show questions list.
+ * Servlet to add users.
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
- * @since 24.01.18
+ * @since 02.02.18
  */
-@WebServlet(urlPatterns = "/")
-public class IndexServlet extends HttpServlet {
-
+@WebServlet("/users/add")
+public class UserAddServlet extends HttpServlet {
     /**
-     * Shows questions list..
+     * Show add user form.
      * @param req request.
      * @param resp response.
      * @throws ServletException if error occur.
@@ -29,17 +27,11 @@ public class IndexServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        EntityManager em = ConnectionFactory.getFactory().createEntityManager();
-        List<Question> list = em.createQuery("select q from Question q", Question.class).getResultList();
-        em.close();
-
-        req.setAttribute("questions", list);
-        req.getRequestDispatcher("questions.jsp").forward(req, resp);
+        req.getRequestDispatcher("/addUser.jsp").forward(req, resp);
     }
 
     /**
-     * Shows questions list..
+     * Adds new user to app.
      * @param req request.
      * @param resp response.
      * @throws ServletException if error occur.
@@ -47,6 +39,24 @@ public class IndexServlet extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        doGet(req, resp);
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        String email = req.getParameter("email");
+        String isAdmin = req.getParameter("isAdmin");
+
+        if ("".equals(login) || "".equals(password) || "".equals(email)) {
+            req.getRequestDispatcher("/addUser.jsp").forward(req, resp);
+            return;
+        }
+
+        User newUser = new User(login, password, email, isAdmin == null ? false : true);
+
+        EntityManager em = ConnectionFactory.getFactory().createEntityManager();
+        em.getTransaction().begin();
+        em.persist(newUser);
+        em.getTransaction().commit();
+        em.close();
+
+        resp.sendRedirect(req.getContextPath() + "/users");
     }
 }

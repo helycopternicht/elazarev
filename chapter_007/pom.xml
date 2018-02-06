@@ -13,7 +13,6 @@
     <packaging>pom</packaging>
     <modules>
         <module>toster</module>
-        <module>hibernate_example</module>
     </modules>
 
 

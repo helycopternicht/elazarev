@@ -4,37 +4,41 @@
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
- 		http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
- 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+           http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
-    <import resource="loggers.xml"/>
+    <context:annotation-config/>
+    <context:component-scan base-package="com.elazarev.spring"/>
 
-    <bean id="client" class="com.elazarev.spring.Client">
-        <constructor-arg name="id" value="${id}"/>
-        <constructor-arg name="fullName" value="${name}"/>
-        <property name="greeting" value="Hello there!"/>
-    </bean>
+    <!--<import resource="loggers.xml"/>-->
 
-    <bean id="app" class="com.elazarev.spring.App">
-        <constructor-arg index="0" ref="client"/>
-        <constructor-arg index="1" ref="consoleEventLogger"/>
-        <constructor-arg>
-            <map>
-                <entry key="INFO" value-ref="consoleEventLogger"/>
-                <entry key="ERROR" value-ref="combinedEventLogger" />
-            </map>
-        </constructor-arg>
-    </bean>
+    <!--<bean id="client" class="com.elazarev.spring.Client">-->
+        <!--<constructor-arg name="id" value="${id}"/>-->
+        <!--<constructor-arg name="fullName" value="${name}"/>-->
+        <!--<property name="greeting" value="Hello there!"/>-->
+    <!--</bean>-->
 
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath:client.properties</value>
-            </list>
-        </property>
+    <!--<bean id="app" class="com.elazarev.spring.App">-->
+        <!--<constructor-arg index="0" ref="client"/>-->
+        <!--<constructor-arg index="1" ref="consoleEventLogger"/>-->
+        <!--<constructor-arg>-->
+            <!--<map>-->
+                <!--<entry key="INFO" value-ref="consoleEventLogger"/>-->
+                <!--<entry key="ERROR" value-ref="combinedEventLogger" />-->
+            <!--</map>-->
+        <!--</constructor-arg>-->
+    <!--</bean>-->
 
-        <property name="ignoreResourceNotFound" value="true"/>
+    <!--<bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">-->
+        <!--<property name="locations">-->
+            <!--<list>-->
+                <!--<value>classpath:client.properties</value>-->
+            <!--</list>-->
+        <!--</property>-->
 
-    </bean>
+        <!--<property name="ignoreResourceNotFound" value="true"/>-->
+
+    <!--</bean>-->
 
 </beans>

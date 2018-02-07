@@ -1,47 +1,43 @@
 package com.elazarev.spring;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import java.util.Map;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 06.02.18
  */
+@Component
 public class App {
 
-    private Client client;
+    private EventLogger infoLogger;
+    private EventLogger errorLogger;
 
-    private EventLogger defaultEventLogger;
 
-    private Map<EventType, EventLogger> loggers;
-
-    public App(Client client, EventLogger eventLogger, Map<EventType, EventLogger> loggers) {
-        this.client = client;
-        this.defaultEventLogger = eventLogger;
-        this.loggers = loggers;
-    }
-
-    public App() {
+    @Autowired
+    public App(@Qualifier("consoleEventLogger") EventLogger info, @Qualifier("cacheFileEventLogger") EventLogger error) {
+        this.infoLogger = info;
+        this.errorLogger = error;
     }
 
     public static void main(String[] args) {
-
         ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
         App app = ctx.getBean("app", App.class);
         app.logEvent(ctx.getBean("event", Event.class));
         app.logEvent(ctx.getBean("event", Event.class));
         app.logEvent(ctx.getBean("event", Event.class));
         app.logEvent(ctx.getBean("event", Event.class));
-
         ctx.close();
     }
 
     public void logEvent(Event e) {
-        EventLogger logger = loggers.get(e.getType());
-        if (logger == null) {
-            logger = defaultEventLogger;
+        if (e.getType() == EventType.ERROR) {
+            errorLogger.logEvent(e);
+        } else {
+            infoLogger.logEvent(e);
         }
-        logger.logEvent(e);
     }
 }

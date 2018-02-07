@@ -1,5 +1,8 @@
 package com.elazarev.spring;
 
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import javax.annotation.PreDestroy;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,13 +11,14 @@ import java.util.List;
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 06.02.18
  */
+@Component
 public class CacheFileEventLogger extends FileEventLogger {
 
     private int cacheSize;
 
     private List<Event> cache;
 
-    public CacheFileEventLogger(String fileName, int cacheSize) {
+    public CacheFileEventLogger(@Value("log.txt") String fileName, @Value("10") int cacheSize) {
         super(fileName);
         this.cacheSize = cacheSize;
         this.cache = new ArrayList<>(cacheSize);

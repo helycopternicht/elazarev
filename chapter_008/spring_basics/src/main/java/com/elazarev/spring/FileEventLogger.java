@@ -1,7 +1,11 @@
 package com.elazarev.spring;
 
 import org.apache.commons.io.FileUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.io.File;
 import java.io.IOException;
 
@@ -9,13 +13,14 @@ import java.io.IOException;
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 06.02.18
  */
+@Component("fileE")
 public class FileEventLogger implements EventLogger {
 
     private String fileName;
 
     private File file;
 
-    public FileEventLogger(String fileName) {
+    public FileEventLogger(@Value("log.txt")String fileName) {
         this.fileName = fileName;
     }
 
@@ -27,6 +32,7 @@ public class FileEventLogger implements EventLogger {
         this.fileName = fileName;
     }
 
+    @PostConstruct
     private void init() throws IOException {
         this.file = new File(this.fileName);
         if (!this.file.canWrite()) {

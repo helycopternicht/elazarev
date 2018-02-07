@@ -1,33 +1,37 @@
 package com.elazarev.spring;
 
-import java.text.DateFormat;
-import java.util.Date;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 06.02.18
  */
+@Component
+@Scope("prototype")
 public class Event {
 
     private int id;
 
     private String msg;
 
-    private Date date;
-
-    private DateFormat df;
+    private LocalDateTime date;
 
     private EventType type;
 
-    public Event(Date date, DateFormat df) {
+    public Event(@Value("#{T(java.time.LocalDateTime).now()}") LocalDateTime date) {
         this.date = date;
-        this.df = df;
     }
 
     public EventType getType() {
         return type;
     }
 
+    @Value("#{T(com.elazarev.spring.EventType).ERROR}")
     public void setType(EventType type) {
         this.type = type;
     }
@@ -36,6 +40,7 @@ public class Event {
         return msg;
     }
 
+    @Value("Some event for ....")
     public void setMsg(String msg) {
         this.msg = msg;
     }
@@ -44,16 +49,22 @@ public class Event {
         return id;
     }
 
-    public Date getDate() {
+    public LocalDateTime getDate() {
         return date;
+    }
+
+    @Value("#{T(java.lang.Math).random() * 10}")
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
         final StringBuffer sb = new StringBuffer("Event{");
-        sb.append("id=").append(id);
+        sb.append(" id='").append(id);
         sb.append(", msg='").append(msg).append('\'');
-        sb.append(", date=").append(df.format(date));
+        sb.append(", type='").append(type);
+        sb.append(", date=").append(date.format(DateTimeFormatter.ISO_DATE));
         sb.append('}');
         return sb.toString();
     }

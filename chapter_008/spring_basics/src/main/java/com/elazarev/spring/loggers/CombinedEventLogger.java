@@ -1,5 +1,6 @@
-package com.elazarev.spring;
+package com.elazarev.spring.loggers;
 
+import com.elazarev.spring.events.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

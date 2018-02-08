@@ -1,7 +1,8 @@
-package com.elazarev.spring;
+package com.elazarev.spring.loggers;
 
+import com.elazarev.spring.events.Event;
+import com.elazarev.spring.loggers.EventLogger;
 import org.apache.commons.io.FileUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

@@ -11,10 +11,15 @@
             http://www.springframework.org/schema/aop
             http://www.springframework.org/schema/aop/spring-aop-3.2.xsd">
 
+    <!--for using annotations-->
     <context:annotation-config/>
     <context:component-scan base-package="com.elazarev.spring"/>
+
+    <!--for using aspects-->
     <aop:aspectj-autoproxy/>
 
+
+    <!--xml configs-->
     <!--<import resource="loggers.xml"/>-->
 
     <!--<bean id="client" class="com.elazarev.spring.Client">-->

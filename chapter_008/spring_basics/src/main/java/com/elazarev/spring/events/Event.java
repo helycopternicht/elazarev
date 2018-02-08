@@ -1,4 +1,4 @@
-package com.elazarev.spring;
+package com.elazarev.spring.events;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
@@ -31,7 +31,7 @@ public class Event {
         return type;
     }
 
-    @Value("#{T(com.elazarev.spring.EventType).ERROR}")
+    @Value("#{T(com.elazarev.spring.events.EventType).ERROR}")
     public void setType(EventType type) {
         this.type = type;
     }

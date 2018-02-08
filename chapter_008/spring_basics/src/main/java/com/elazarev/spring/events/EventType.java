@@ -1,4 +1,4 @@
-package com.elazarev.spring;
+package com.elazarev.spring.events;
 
 /**
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)

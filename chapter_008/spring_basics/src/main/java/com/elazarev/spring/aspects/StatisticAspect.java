@@ -32,7 +32,7 @@ public class StatisticAspect {
      * Collect stat information when logEvent calling.
      * @param jp join point to calling method.
      */
-    @AfterReturning("execution(public * com.elazarev.spring.EventLogger.logEvent(..))")
+    @AfterReturning("execution(public * com.elazarev.spring.loggers.EventLogger.logEvent(..))")
     public void collectStatistic(JoinPoint jp) {
         String clazz = jp.getTarget().getClass().getSimpleName();
         if (map.containsKey(clazz)) {

@@ -1,4 +1,6 @@
-package com.elazarev.spring;
+package com.elazarev.spring.loggers;
+
+import com.elazarev.spring.events.Event;
 
 /**
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)

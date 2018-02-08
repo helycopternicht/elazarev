@@ -1,3 +1,5 @@
+package com.elazarev;
+
 /**
  * @author Eugene Lazarev mailto(helycopternicht@rambler.ru)
  * @since 05.02.18

@@ -1,5 +1,6 @@
 package com.elazarev.spring;
 
+import com.elazarev.spring.aspects.StatisticAspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -15,6 +16,7 @@ public class App {
 
     private EventLogger infoLogger;
     private EventLogger errorLogger;
+    private boolean error;
 
 
     @Autowired
@@ -30,14 +32,18 @@ public class App {
         app.logEvent(ctx.getBean("event", Event.class));
         app.logEvent(ctx.getBean("event", Event.class));
         app.logEvent(ctx.getBean("event", Event.class));
+
+        StatisticAspect stat = ctx.getBean("stat", StatisticAspect.class);
+        stat.showResults();
         ctx.close();
     }
 
     public void logEvent(Event e) {
-        if (e.getType() == EventType.ERROR) {
+        if (error) {
             errorLogger.logEvent(e);
         } else {
             infoLogger.logEvent(e);
         }
+        error = !error;
     }
 }
